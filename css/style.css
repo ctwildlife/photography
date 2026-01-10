@@ -1,6 +1,5 @@
 /* Body styling */
 body {
-  background: red !important;
   font-family: Georgia, serif;
   max-width: 800px; /* keeps text content from being too wide */
   margin: auto;
@@ -24,20 +23,20 @@ h1 {
 /* Images: responsive and centered */
 .wildlife-photo {
   width: 100%;        /* fill container width */
-  max-width: 1600px;  /* limit how big they can grow on large screens */
+  max-width: 1600 px;
   height: auto;       /* keep aspect ratio */
   display: block;     /* remove inline spacing issues */
-  margin: 0 auto;     /* center if narrower than container */
 }
 
 /* Captions under images, centered */
 .caption {
-  margin: 0;              /* removes ALL default paragraph spacing */
-  padding-top: 4px;       /* small controlled gap from image */
+  margin: 0;          /* removes default <p> spacing */
+  padding-top: 2px;   /* tight gap under photo */
   text-align: center;
   font-family: Georgia, serif;
   font-size: 16px;
   font-style: normal;
 }
+
 
 
