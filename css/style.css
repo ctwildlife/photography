@@ -16,7 +16,7 @@ h1 {
 .gallery {
   display: flex;
   flex-direction: column;  /* stack one photo after another */
-  gap: 20px;               /* space between photo + caption blocks */
+  gap: 28px;               /* space between photo + caption blocks */
   align-items: center;     /* center images horizontally */
 }
 
@@ -35,6 +35,6 @@ h1 {
   font-family: Georgia, serif;
   font-size: 16px;
   font-style: normal;
-  margin-top: 8px;
+  margin-top: 5px;
 }
 
