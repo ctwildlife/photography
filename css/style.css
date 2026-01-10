@@ -1,5 +1,6 @@
 /* Body styling */
 body {
+  background: turquoise !important;
   font-family: Georgia, serif;
   max-width: 800px; /* keeps text content from being too wide */
   margin: auto;
