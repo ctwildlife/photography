@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wildlife Photography</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <h1>Wildlife Photography</h1>
+  <label for="category">Select a category:</label>
+  <select id="category" onchange="goToPage()">
+    <option value="">--Choose a category--</option>
+    <option value="pages/mammals-scroll.html">Mammals</option>
+  </select>
+
+  <script>
+    function goToPage() {
+      const page = document.getElementById("category").value;
+      if(page) window.location.href = page;
+    }
+  </script>
+</body>
+</html>
