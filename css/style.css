@@ -18,8 +18,8 @@ h1 {
 
 .gallery {
   display: flex;
-  flex-wrap: wrap;   /* photos move to next row if needed */
-  gap: 20px;         /* space between photos */
+  flex-direction: column; /* stack items vertically */
+  gap: 20px;              /* space between photos */
 }
 
 .photo img {
@@ -30,7 +30,8 @@ h1 {
 
 .photo .caption {
   text-align: center;
-  font-style: italic;
+  font-style: normal;
+  font-family: Georgia, serif;
   margin-top: 5px;
   font-size: 14px;
 }
