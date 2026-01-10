@@ -23,7 +23,7 @@ h1 {
 /* Images: responsive and centered */
 .wildlife-photo {
   width: 100%;        /* fill container width */
-  max-width: 1000px;  /* limit how big they can grow on large screens */
+  max-width: 1600px;  /* limit how big they can grow on large screens */
   height: auto;       /* keep aspect ratio */
   display: block;     /* remove inline spacing issues */
   margin: 0 auto;     /* center if narrower than container */
