@@ -12,19 +12,21 @@ h1 {
 }
 
 /* Gallery container: vertical scroll, one image per row */
+/* Gallery container */
 .gallery {
   display: flex;
-  flex-direction: column; /* stack images vertically */
-  gap: 20px;              /* space between photo+caption groups */
-  align-items: center;    /* center images horizontally */
+  flex-direction: column;  /* stack one photo after another */
+  gap: 20px;               /* space between photo + caption blocks */
+  align-items: center;     /* center images horizontally */
 }
 
-/* Images: responsive, fill container width */
+/* Images: responsive and centered */
 .wildlife-photo {
-  width: 100%;   /* fill container width */
-  max-width: 800px; /* optional: cap width so very large images don't get huge */
-  height: auto;  /* maintain aspect ratio */
-  display: block;
+  width: 100%;        /* fill container width */
+  max-width: 1000px;  /* limit how big they can grow on large screens */
+  height: auto;       /* keep aspect ratio */
+  display: block;     /* remove inline spacing issues */
+  margin: 0 auto;     /* center if narrower than container */
 }
 
 /* Captions under images, centered */
@@ -32,6 +34,7 @@ h1 {
   text-align: center;
   font-family: Georgia, serif;
   font-size: 16px;
-  font-style: normal;  /* remove italics */
-  margin-top: 5px;
+  font-style: normal;
+  margin-top: 8px;
 }
+
