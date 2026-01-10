@@ -1,37 +1,37 @@
+/* Body styling */
 body {
   font-family: Georgia, serif;
-  max-width: 800px;
+  max-width: 800px; /* keeps text content from being too wide */
   margin: auto;
   padding: 20px;
 }
 
+/* Page heading */
 h1 {
   text-align: center;
 }
 
-.wildlife-photo {
-  width: 400px;  /* sets the photo width */
-  height: auto;  /* keeps the photo proportions */
-  display: block; /* makes it easier to center later if you want */
-  margin: 10px 0; /* adds a little space above and below */
-}
-
+/* Gallery container: vertical scroll, one image per row */
 .gallery {
   display: flex;
-  flex-direction: column; /* stack items vertically */
-  gap: 20px;              /* space between photos */
+  flex-direction: column; /* stack images vertically */
+  gap: 20px;              /* space between photo+caption groups */
+  align-items: center;    /* center images horizontally */
 }
 
-.photo img {
-  width: 300px;      /* controls photo size */
-  height: auto;
+/* Images: responsive, fill container width */
+.wildlife-photo {
+  width: 100%;   /* fill container width */
+  max-width: 800px; /* optional: cap width so very large images don't get huge */
+  height: auto;  /* maintain aspect ratio */
   display: block;
 }
 
-.photo .caption {
+/* Captions under images, centered */
+.caption {
   text-align: center;
-  font-style: normal;
   font-family: Georgia, serif;
+  font-size: 16px;
+  font-style: normal;  /* remove italics */
   margin-top: 5px;
-  font-size: 14px;
 }
