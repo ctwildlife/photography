@@ -31,10 +31,12 @@ h1 {
 
 /* Captions under images, centered */
 .caption {
+  margin: 0;              /* removes ALL default paragraph spacing */
+  padding-top: 4px;       /* small controlled gap from image */
   text-align: center;
   font-family: Georgia, serif;
   font-size: 16px;
   font-style: normal;
-  margin-top: 0px;
 }
+
 
