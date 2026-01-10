@@ -8,3 +8,29 @@ body {
 h1 {
   text-align: center;
 }
+
+.wildlife-photo {
+  width: 400px;  /* sets the photo width */
+  height: auto;  /* keeps the photo proportions */
+  display: block; /* makes it easier to center later if you want */
+  margin: 10px 0; /* adds a little space above and below */
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;   /* photos move to next row if needed */
+  gap: 20px;         /* space between photos */
+}
+
+.photo img {
+  width: 300px;      /* controls photo size */
+  height: auto;
+  display: block;
+}
+
+.photo .caption {
+  text-align: center;
+  font-style: italic;
+  margin-top: 5px;
+  font-size: 14px;
+}
