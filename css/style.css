@@ -16,7 +16,7 @@ h1 {
 .gallery {
   display: flex;
   flex-direction: column;  /* stack one photo after another */
-  gap: 70px;               /* space between photo + caption blocks */
+  gap: 40px;               /* space between photo + caption blocks */
   align-items: center;     /* center images horizontally */
 }
 
