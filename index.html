@@ -6,18 +6,18 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h1>Wildlife Photography</h1>
-  <label for="category">Select a category:</label>
-  <select id="category" onchange="goToPage()">
-    <option value="">--Choose a category--</option>
-    <option value="pages/birds-scroll.html">Birds</option>
-  </select>
+  
+  <!-- Navigation -->
+  <nav class="navbar">
+    <ul class="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="birds.html">Birds</a></li>
+    </ul>
+  </nav>
 
-  <script>
-    function goToPage() {
-      const page = document.getElementById("category").value;
-      if(page) window.location.href = page;
-    }
-  </script>
+  <!-- Page content -->
+  <h1>Wildlife Photography</h1>
+  <p>Welcome! Select a category from the menu above to explore photos.</p>
+
 </body>
 </html>
