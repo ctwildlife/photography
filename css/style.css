@@ -20,7 +20,7 @@ h1 {
 
 /* Each photo + caption block */
 .photo-block {
-  margin-bottom: 60px; /* space AFTER caption */
+  margin-bottom: 40px; /* space AFTER caption */
 }
 
 /* Images */
@@ -29,7 +29,7 @@ h1 {
   max-width: 1600px; /* FIX: removed space before px */
   height: auto;
   display: block;
-  margin-bottom: 6px; /* image → caption spacing */
+  margin-bottom: 2px; /* image → caption spacing */
 }
 
 /* Captions */
