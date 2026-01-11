@@ -30,7 +30,7 @@ h2 {
 
 /* Captions under images, centered */
 .caption {
-  margin: 0;          /* removes default <p> spacing */
+  margin-bottom: 20px;          /* removes default <p> spacing */
   padding-top: 2px; 
   padding-bottom: 10px;  /* tight gap under photo */
   text-align: center;
