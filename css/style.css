@@ -1,7 +1,7 @@
 /* Body styling */
 body {
   font-family: Georgia, serif;
-  max-width: 800px; /* keeps text content from being too wide */
+  max-width: 800px;
   margin: auto;
   padding: 20px;
 }
@@ -11,33 +11,31 @@ h1 {
   text-align: center;
 }
 
-/* Gallery container: vertical scroll, one image per row */
 /* Gallery container */
 .gallery {
   display: flex;
-  flex-direction: column;  /* stack one photo after another */
-  gap: 40px;               /* space between photo + caption blocks */
-  align-items: center;     /* center images horizontally */
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Images: responsive and centered */
+/* Each photo + caption block */
+.photo-block {
+  margin-bottom: 60px; /* space AFTER caption */
+}
+
+/* Images */
 .wildlife-photo {
-  width: 100%;        /* fill container width */
-  max-width: 1600 px;
-  height: auto;       /* keep aspect ratio */
-  display: block;     /* remove inline spacing issues */
+  width: 100%;
+  max-width: 1600px; /* FIX: removed space before px */
+  height: auto;
+  display: block;
+  margin-bottom: 6px; /* image → caption spacing */
 }
 
-/* Captions under images, centered */
+/* Captions */
 .caption {
-  margin-bottom: 60px;          /* removes default <p> spacing */
-  padding-top: 2px; 
-  padding-bottom: 10px;  /* tight gap under photo */
+  margin: 0;               /* kill default margins */
+  padding: 0;
   text-align: center;
-  font-family: Georgia, serif;
   font-size: 16px;
-  font-style: normal;
 }
-
-
-
