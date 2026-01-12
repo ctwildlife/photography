@@ -4,10 +4,29 @@
   <meta charset="UTF-8" />
   <title>Birds</title>
   <link rel="stylesheet" href="/photography/css/style.css?v=3">
+
+  <!-- Slideshow CSS -->
+  <style>
+    .slideshow-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 40px auto;
+    }
+
+    .slideshow-container img {
+      max-width: 90%;
+      max-height: 70vh;
+      object-fit: contain;
+      opacity: 1;
+      transition: opacity 1s ease-in-out;
+    }
+  </style>
 </head>
 
 <body>
 
+  <!-- Navigation -->
   <nav class="navbar">
     <ul class="menu">
       <li><a href="/photography/index.html">Home</a></li>
@@ -15,26 +34,58 @@
       <li class="dropdown">
         <a href="#">Birds ▾</a>
         <ul class="dropdown-menu">
-          <li><a href="pages/scroll-birds.html">Songbirds</a></li>
-          <li><a href="shorebirds.html">Shorebirds</a></li>
-          <li><a href="raptors.html">Raptors</a></li>
-          <li><a href="grouse.html">Grouse</a></li>
-          <li><a href="warblers.html">Warblers</a></li>
-          <li><a href="corvids.html">Corvids</a></li>
-          <li><a href="waterfowl.html">Waterfowl</a></li>
-          <li><a href="miscellaneous.html">Miscellaneous</a></li>
+          <li><a href="/photography/pages/scroll-birds.html">Songbirds</a></li>
+          <li><a href="/photography/pages/shorebirds.html">Shorebirds</a></li>
+          <li><a href="/photography/pages/raptors.html">Raptors</a></li>
+          <li><a href="/photography/pages/grouse.html">Grouse</a></li>
+          <li><a href="/photography/pages/warblers.html">Warblers</a></li>
+          <li><a href="/photography/pages/corvids.html">Corvids</a></li>
+          <li><a href="/photography/pages/waterfowl.html">Waterfowl</a></li>
+          <li><a href="/photography/pages/miscellaneous.html">Miscellaneous</a></li>
         </ul>
       </li>
     </ul>
   </nav>
 
+  <!-- Page Heading -->
   <h1>Birds</h1>
 
+  <!-- ✅ Slideshow -->
+  <div class="slideshow-container">
+    <img id="slideshow" src="/photography/photos/birds/spotted-towhee.jpg" alt="Wildlife Slideshow">
+  </div>
+
+  <script>
+    const images = [
+      "/photography/photos/birds/spotted-towhee.jpg",
+      "/photography/photos/birds/western-meadowlark.jpg",
+      "/photography/photos/birds/wilsons-snipe.jpg"
+    ];
+
+    let index = 0;
+    const slideshow = document.getElementById("slideshow");
+
+    setInterval(() => {
+      // fade out
+      slideshow.style.opacity = 0;
+
+      setTimeout(() => {
+        // change image
+        index = (index + 1) % images.length;
+        slideshow.src = images[index];
+
+        // fade in
+        slideshow.style.opacity = 1;
+      }, 1000); // must match CSS transition time
+    }, 5000); // 5 seconds per slide
+  </script>
+
+  <!-- Page content / Gallery -->
   <div class="page-content">
     <div class="gallery">
 
       <figure class="photo-block">
-        <img src="../photos/birds/western-meadowlark.jpg"
+        <img src="/photography/photos/birds/western-meadowlark.jpg"
              alt="Western Meadowlark (Sturnella neglecta)"
              class="wildlife-photo">
         <figcaption class="caption">
@@ -43,7 +94,7 @@
       </figure>
 
       <figure class="photo-block">
-        <img src="../photos/birds/spotted-towhee.jpg"
+        <img src="/photography/photos/birds/spotted-towhee.jpg"
              alt="Spotted Towhee (Pipilo maculatus)"
              class="wildlife-photo">
         <figcaption class="caption">
@@ -52,7 +103,7 @@
       </figure>
 
       <figure class="photo-block">
-        <img src="../photos/birds/wilsons-snipe.jpg"
+        <img src="/photography/photos/birds/wilsons-snipe.jpg"
              alt="Wilson's Snipe (Gallinago delicata)"
              class="wildlife-photo">
         <figcaption class="caption">
