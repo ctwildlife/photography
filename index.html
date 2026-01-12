@@ -4,15 +4,30 @@
   <meta charset="UTF-8">
   <title>Wildlife Photography</title>
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- OPTIONAL: slideshow styling -->
+  <style>
+    .slideshow-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    .slideshow-container img {
+      max-width: 90%;
+      max-height: 70vh;
+      object-fit: contain;
+    }
+  </style>
 </head>
 <body>
-  
+
   <!-- Navigation -->
   <nav class="navbar">
     <ul class="menu">
       <li><a href="../index.html">Home</a></li>
 
-      <!-- Dropdown for Birds -->
       <li class="dropdown">
         <a href="#">Birds ▾</a>
         <ul class="dropdown-menu">
@@ -34,6 +49,28 @@
   <!-- Page content -->
   <h1>xyz</h1>
   <p>wildlife.</p>
+
+  <!-- ✅ Slideshow -->
+  <div class="slideshow-container">
+    <img id="slideshow" src="../photos/birds/spotted-towhee.jpg" alt="Wildlife Slideshow">
+  </div>
+
+  <!-- ✅ Slideshow script -->
+  <script>
+    const images = [
+      "../photos/birds/spotted-towhee.jpg",
+      "../photos/birds/wilsons-snipe.jpg",
+      "../photos/birds/western-meadowlark.jpg"
+    ];
+
+    let index = 0;
+    const slideshow = document.getElementById("slideshow");
+
+    setInterval(() => {
+      index = (index + 1) % images.length;
+      slideshow.src = images[index];
+    }, 5000); // change every 5 seconds
+  </script>
 
 </body>
 </html>
