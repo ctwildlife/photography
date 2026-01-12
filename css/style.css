@@ -2,19 +2,19 @@
 body {
   font-family: Georgia, serif;
   margin: 0;
-  padding: 0;
+  padding: 0; /*this just says "no margins on the page"*/
 }
 
 /* Page heading */
 h1 {
   text-align: center;
-  margin: 40px 0 20px;
+  margin: 40px 0 20px;  /*this says, "I want my header 40 px below the top and then I want 20 px of space below it*/
 }
 
 /* Constrain page content (not navbar) */
 .page-content {
-  max-width: 800px;
-  margin: auto;
+  max-width: 800px; /*this says, "The max width of any item is 800px." So no photo will exceed that.*/
+  margin: auto; /*centers items on the page */
   padding: 20px;
 }
 
@@ -27,7 +27,7 @@ h1 {
 
 /* Each photo + caption block */
 .photo-block {
-  margin-bottom: 60px;
+  margin-bottom: 60px; /*creates space between photos */
 }
 
 /* Images */
@@ -51,7 +51,7 @@ h1 {
    NAVIGATION & DROPDOWN
    ========================= */
 .navbar {
-  background-color: #333;
+  background-color: #111;
 }
 
 .menu {
