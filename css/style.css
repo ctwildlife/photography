@@ -1,14 +1,21 @@
 /* Body styling */
 body {
   font-family: Georgia, serif;
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
+  margin: 0;
+  padding: 0;
 }
 
 /* Page heading */
 h1 {
   text-align: center;
+  margin: 40px 0 20px;
+}
+
+/* Constrain page content (not navbar) */
+.page-content {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
 }
 
 /* Gallery container */
@@ -45,7 +52,6 @@ h1 {
    ========================= */
 .navbar {
   background-color: #333;
-  margin-bottom: 40px;   /* 🔧 ADD: separate nav from gallery */
 }
 
 .menu {
@@ -55,7 +61,6 @@ h1 {
   display: flex;
 }
 
-/* 🔧 ADD: ensure top-level list items don't collapse */
 .menu > li {
   position: relative;
 }
@@ -65,16 +70,11 @@ h1 {
   padding: 14px 20px;
   color: white;
   text-decoration: none;
-  white-space: nowrap;  /* 🔧 ADD: prevent line breaks in menu */
+  white-space: nowrap;
 }
 
 .menu a:hover {
   background-color: #555;
-}
-
-/* Dropdown container */
-.dropdown {
-  position: relative;   /* (already correct, kept for clarity) */
 }
 
 /* Submenu */
@@ -87,11 +87,10 @@ h1 {
   list-style: none;
   padding: 0;
   margin: 0;
-  min-width: 180px;     /* 🔧 CHANGE: slightly wider for long labels */
+  min-width: 180px;
   z-index: 1000;
 }
 
-/* 🔧 ADD: prevent submenu from stretching oddly */
 .dropdown-menu li {
   width: 100%;
 }
