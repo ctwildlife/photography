@@ -20,21 +20,21 @@ h1 {
 
 /* Each photo + caption block */
 .photo-block {
-  margin-bottom: 60px; /* space AFTER caption */
+  margin-bottom: 60px;
 }
 
 /* Images */
 .wildlife-photo {
   width: 100%;
-  max-width: 1600px; /* fixed space before px */
+  max-width: 1600px;
   height: auto;
   display: block;
-  margin-bottom: 6px; /* image → caption spacing */
+  margin-bottom: 6px;
 }
 
 /* Captions */
 .caption {
-  margin: 0;               /* remove default margins */
+  margin: 0;
   padding: 0;
   text-align: center;
   font-size: 16px;
@@ -45,6 +45,7 @@ h1 {
    ========================= */
 .navbar {
   background-color: #333;
+  margin-bottom: 40px;   /* 🔧 ADD: separate nav from gallery */
 }
 
 .menu {
@@ -54,11 +55,17 @@ h1 {
   display: flex;
 }
 
+/* 🔧 ADD: ensure top-level list items don't collapse */
+.menu > li {
+  position: relative;
+}
+
 .menu a {
   display: block;
   padding: 14px 20px;
   color: white;
   text-decoration: none;
+  white-space: nowrap;  /* 🔧 ADD: prevent line breaks in menu */
 }
 
 .menu a:hover {
@@ -67,21 +74,26 @@ h1 {
 
 /* Dropdown container */
 .dropdown {
-  position: relative; /* needed for submenu positioning */
+  position: relative;   /* (already correct, kept for clarity) */
 }
 
 /* Submenu */
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: 100%;       /* just below parent link */
+  top: 100%;
   left: 0;
   background-color: #444;
   list-style: none;
   padding: 0;
   margin: 0;
-  min-width: 160px;
+  min-width: 180px;     /* 🔧 CHANGE: slightly wider for long labels */
   z-index: 1000;
+}
+
+/* 🔧 ADD: prevent submenu from stretching oddly */
+.dropdown-menu li {
+  width: 100%;
 }
 
 .dropdown-menu li a {
