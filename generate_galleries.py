@@ -1,4 +1,4 @@
-#git add Pages/*
+#git add Pages/* or git add .
 #git commit -m "Updated gallery with new photos"
 #git push
 
