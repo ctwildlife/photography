@@ -10,28 +10,20 @@ from PIL.ExifTags import TAGS
 # =========================
 # Function to get image caption from EXIF metadata
 # =========================
+import subprocess
+
 def get_exif_caption(image_path):
-    """Read EXIF metadata to get image caption from common fields."""
+    """Read caption from XMP/EXIF using exiftool (PhotoMechanic-safe)."""
     try:
-        img = Image.open(image_path)
-        exif_data = img._getexif()
-        if not exif_data:
-            return None
-
-        exif = {TAGS.get(tag_id, tag_id): value for tag_id, value in exif_data.items()}
-
-        for tag_name in ["ImageDescription", "XPTitle", "UserComment", "XPComment"]:
-            if tag_name in exif:
-                value = exif[tag_name]
-                if isinstance(value, bytes):
-                    try:
-                        value = value.decode("utf-16le").strip()
-                    except:
-                        value = value.decode("utf-8", errors="ignore").strip()
-                return value.strip() if value else None
-        return None
+        result = subprocess.run(
+            ["exiftool", "-Description", "-s3", image_path],
+            capture_output=True,
+            text=True
+        )
+        caption = result.stdout.strip()
+        return caption if caption else None
     except Exception as e:
-        print(f"Warning: Could not read EXIF from {image_path}: {e}")
+        print(f"ExifTool error on {image_path}: {e}")
         return None
 
 # =========================
