@@ -52,6 +52,7 @@ h1 {
    ========================= */
 .navbar {
   background-color: #111;
+  justify-content: center;
 }
 
 .menu {
