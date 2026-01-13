@@ -1,73 +1,83 @@
+#git add Pages/*
+#git commit -m "Updated gallery with new photos"
+#git push
+
+#python generate_galleries
+
+# git add Pages/*
+# git commit -m "Updated gallery with new photos"
+# git push
+
+# python generate_galleries.py
+
 import os
 from PIL import Image
 from PIL.ExifTags import TAGS
 
-# Configuration
-PHOTOS_DIR = 'Photos'
-PAGES_DIR = 'Pages'
-CSS_PATH = '/CSS/style.css'
-JS_PATH = '/JS/script.js'
+# Base paths
+photos_base = "photos"     # folder where your images live
+pages_base = "pages"       # folder for generated HTML
+categories = ["birds", "mammals", "herps", "landscapes", "arthropods"]
 
-# HTML template
-HTML_TEMPLATE = """<!DOCTYPE html>
-<html>
-<head>
-    <title>{category} Gallery</title>
-    <link rel="stylesheet" href="{css}">
-    <script src="{js}" defer></script>
-    <style>
-        .gallery {{ display: flex; flex-wrap: wrap; gap: 15px; }}
-        .photo {{ width: 250px; text-align: center; }}
-        img {{ width: 100%; height: auto; border-radius: 8px; }}
-        p {{ margin: 5px 0 0 0; font-style: italic; }}
-    </style>
-</head>
-<body>
-    <h1>{category} Gallery</h1>
-    <div class="gallery">
-        {images}
-    </div>
-</body>
-</html>"""
-
-# Function to get EXIF caption if available
-def get_image_caption(image_path):
+def get_exif_caption(image_path):
+    """Read EXIF metadata to get image caption, fallback to None."""
     try:
         img = Image.open(image_path)
         exif_data = img._getexif()
-        if exif_data:
-            for tag_id, value in exif_data.items():
-                tag = TAGS.get(tag_id, tag_id)
-                if tag == 'ImageDescription':
-                    return value
-    except:
-        pass
-    return ""
+        if not exif_data:
+            return None
+        # Look for ImageDescription or XPTitle fields
+        for tag_id, value in exif_data.items():
+            tag = TAGS.get(tag_id, tag_id)
+            if tag in ["ImageDescription", "XPTitle"]:
+                if isinstance(value, bytes):
+                    value = value.decode('utf-16', errors='ignore')
+                return value
+        return None
+    except Exception as e:
+        print(f"Warning: Could not read EXIF from {image_path}: {e}")
+        return None
 
-# Loop through categories
-for category in os.listdir(PHOTOS_DIR):
-    folder_path = os.path.join(PHOTOS_DIR, category)
-    if not os.path.isdir(folder_path):
-        continue
+for category in categories:
+    folder = os.path.join(photos_base, category)
+    images = [f for f in os.listdir(folder) if f.lower().endswith((".jpg", ".jpeg", ".png"))]
 
-    images_html = ""
-    for filename in sorted(os.listdir(folder_path)):
-        if filename.lower().endswith(('.jpg', '.jpeg', '.png')):
-            image_path = f'/Photos/{category}/{filename}'
-            caption = get_image_caption(os.path.join(folder_path, filename))
-            images_html += f'<div class="photo"><img src="{image_path}" alt="{caption}"><p>{caption}</p></div>\n'
+    html_lines = [
+        "<!DOCTYPE html>",
+        "<html lang='en'>",
+        "<head>",
+        f"    <title>{category.capitalize()} Gallery</title>",
+        "    <link rel='stylesheet' href='/photography/css/style.css'>",
+        "</head>",
+        "<body>",
+        f"<h1>{category.capitalize()}</h1>",
+        "<div class='gallery'>"
+    ]
 
-    html_content = HTML_TEMPLATE.format(category=category.capitalize(),
-                                        css=CSS_PATH,
-                                        js=JS_PATH,
-                                        images=images_html)
+    for img_file in images:
+        img_path = os.path.join(folder, img_file)
 
-    # Save HTML file
-    os.makedirs(PAGES_DIR, exist_ok=True)
-    output_file = os.path.join(PAGES_DIR, f'{category}.html')
-    with open(output_file, 'w', encoding='utf-8') as f:
-        f.write(html_content)
+        # Pull caption from EXIF metadata if available
+        caption = get_exif_caption(img_path)
+        if not caption:
+            # Fallback to filename if no metadata
+            caption = os.path.splitext(img_file)[0].replace("-", " ").replace("_", " ").capitalize()
 
-    print(f"Generated gallery for {category}: {output_file}")
+        # Absolute path for GitHub Pages
+        img_src = f"/photography/photos/{category}/{img_file}"
+        alt_text = caption.split(".")[0].strip()  # alt can mirror caption or be customized
 
-print("All galleries generated successfully!")
+        html_lines.append("  <div class='photo'>")
+        html_lines.append(f"    <img src='{img_src}' alt='{alt_text}'>")
+        html_lines.append(f"    <p>{caption}</p>")
+        html_lines.append("  </div>")
+
+    html_lines.append("</div>")  # close gallery
+    html_lines.append("</body></html>")
+
+    # Write HTML file
+    out_file = os.path.join(pages_base, f"{category}.html")
+    with open(out_file, "w", encoding="utf-8") as f:
+        f.write("\n".join(html_lines))
+
+    print(f"Generated gallery for {category} with {len(images)} images.")
