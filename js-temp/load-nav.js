@@ -1,16 +1,8 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const nav = document.getElementById("navbar");
-  if (!nav) return;
-
-  nav.innerHTML = `
-    <div style="
-      background:red;
-      color:white;
-      padding:20px;
-      font-size:24px;
-      font-weight:bold;
-    ">
-      JS IS RUNNING AND INJECTING HTML
-    </div>
-  `;
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("/photography/pages/nav.html")  // path to your nav HTML
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("navbar").innerHTML = data;
+        })
+        .catch(error => console.error("Error loading nav:", error));
 });
