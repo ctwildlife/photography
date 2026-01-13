@@ -32,36 +32,6 @@
   <!-- Page Heading -->
   <h1>Birds</h1>
 
-  <!-- ✅ Slideshow -->
-  <div class="slideshow-container">
-    <img id="slideshow" src="/photography/photos/birds/spotted-towhee.jpg" alt="Wildlife Slideshow">
-  </div>
-
-  <script>
-    const images = [
-      "/photography/photos/birds/spotted-towhee.jpg",
-      "/photography/photos/birds/western-meadowlark.jpg",
-      "/photography/photos/birds/wilsons-snipe.jpg"
-    ];
-
-    let index = 0;
-    const slideshow = document.getElementById("slideshow");
-
-    setInterval(() => {
-      // fade out
-      slideshow.style.opacity = 0;
-
-      setTimeout(() => {
-        // change image
-        index = (index + 1) % images.length;
-        slideshow.src = images[index];
-
-        // fade in
-        slideshow.style.opacity = 1;
-      }, 1000); // must match CSS transition time
-    }, 5000); // 5 seconds per slide
-  </script>
-
   <!-- Page content / Gallery -->
   <div class="page-content">
     <div class="gallery">
