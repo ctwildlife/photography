@@ -5,7 +5,7 @@ let captions = [];
 let index = 0;
 
 // Load recent photos JSON with captions
-fetch('/photography/recent_photos.json')
+fetch('/recent_photos.json')
   .then(response => response.json())
   .then(data => {
     if (data.length === 0) return;
