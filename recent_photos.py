@@ -129,8 +129,7 @@ print(f"Recent photos page generated at {output_file}")
 # =========================
 # Save JSON for slideshow
 # =========================
-json_path = os.path.join("pages", "recent_photos.json")
-os.makedirs(os.path.dirname(json_path), exist_ok=True)
+json_path = "recent_photos.json"  # save directly in photography root
 with open(json_path, "w", encoding="utf-8") as f:
     json.dump(recent_photos_data, f, indent=2)
 
