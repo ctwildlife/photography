@@ -10,13 +10,10 @@ import re
 def resize_for_web_once(original_path, web_path, max_size=(1920, 1920), target_mb=1.0):
     if os.path.exists(web_path) and os.path.getsize(web_path) <= target_mb * 1024 * 1024:
         return
-
     os.makedirs(os.path.dirname(web_path), exist_ok=True)
-
     try:
         img = Image.open(original_path)
         img.thumbnail(max_size, Image.Resampling.LANCZOS)
-
         quality = 85
         while quality >= 30:
             img.save(web_path, format="JPEG", quality=quality, optimize=True)
@@ -40,7 +37,7 @@ def find_gallery_folders(base_path):
     return gallery_folders
 
 # =========================
-# Get images in a folder (non-recursive)
+# Get images in a folder
 # =========================
 def get_images_in_folder(folder):
     return [
@@ -50,7 +47,7 @@ def get_images_in_folder(folder):
     ]
 
 # =========================
-# Get EXIF caption
+# EXIF functions
 # =========================
 def get_exif_caption(image_path):
     try:
@@ -65,17 +62,11 @@ def get_exif_caption(image_path):
         print(f"ExifTool error on {image_path}: {e}")
         return None
 
-# =========================
-# Italicize Latin names in parentheses
-# =========================
 def italicize_latin_names(caption):
     if not caption:
         return caption
     return re.sub(r"\(([^)]+)\)", r"(<em>\1</em>)", caption)
 
-# =========================
-# Get EXIF DateTimeOriginal
-# =========================
 def get_date_taken(image_path):
     try:
         result = subprocess.run(
@@ -93,7 +84,7 @@ def get_date_taken(image_path):
         return None
 
 # =========================
-# Base paths
+# Paths
 # =========================
 photos_base = "photos"
 web_base = "photos_web"
@@ -105,40 +96,32 @@ os.makedirs(pages_base, exist_ok=True)
 # Manual nav entries
 # =========================
 manual_nav = [
-    {"title": "Home", "url": "/photography/pages/index.html"},
-    #{"title": "About", "url": "/photography/pages/about.html"},
+    {"title": "Home", "url": "/photography/index.html"},
+    # {"title": "About", "url": "/photography/pages/about.html"},
 ]
 
 # =========================
-# Build gallery model
+# Build galleries
 # =========================
 gallery_folders = find_gallery_folders(photos_base)
 galleries = []
-
 for folder in gallery_folders:
     images = get_images_in_folder(folder)
     if not images:
         continue
-
     rel_path = os.path.relpath(folder, photos_base)
     path_parts = rel_path.split(os.sep)
-
-    gallery = {
+    galleries.append({
         "folder": folder,
         "rel_path": rel_path,
         "path_parts": path_parts,
         "slug": "-".join(path_parts),
         "title": path_parts[-1].replace("-", " ").title(),
         "images": images
-    }
-    galleries.append(gallery)
-
-print("\nDetected galleries:")
-for g in galleries:
-    print(f"- {g['slug']} ({len(g['images'])} images)")
+    })
 
 # =========================
-# Build nav tree from galleries
+# Build nav tree
 # =========================
 def build_nav_tree(galleries):
     tree = {}
@@ -151,36 +134,48 @@ def build_nav_tree(galleries):
         node['_slug'] = g['slug']
     return tree
 
+# =========================
+# Render nav HTML with dropdown classes
+# =========================
 def nav_html_from_tree(tree):
-    html = "<ul class='nav'>\n"
     def recurse(subtree):
-        s = "<ul>\n"
+        html = "<ul class='dropdown-menu'>\n"
         for key, value in sorted(subtree.items()):
             if key == '_slug':
                 continue
-            slug = value.get('_slug')
-            if slug:
-                s += f"<li><a href='/photography/pages/{slug}.html'>{key.title()}</a>"
-            else:
-                s += f"<li>{key.title()}"
             children = {k:v for k,v in value.items() if k != '_slug'}
+            slug = value.get('_slug')
             if children:
-                s += recurse(children)
-            s += "</li>\n"
-        s += "</ul>\n"
-        return s
-    html += recurse(tree)
+                html += f"<li class='dropdown'><a href='#'>{key.title()}</a>\n"
+                html += recurse(children)
+                html += "</li>\n"
+            elif slug:
+                html += f"<li><a href='/photography/pages/{slug}.html'>{key.title()}</a></li>\n"
+        html += "</ul>\n"
+        return html
+    html = "<ul class='menu'>\n"
+    for key, value in sorted(tree.items()):
+        children = {k:v for k,v in value.items() if k != '_slug'}
+        slug = value.get('_slug')
+        if children:
+            html += f"  <li class='dropdown'><a href='#'>{key.title()}</a>\n"
+            html += recurse(children)
+            html += "  </li>\n"
+        elif slug:
+            html += f"  <li><a href='/photography/pages/{slug}.html'>{key.title()}</a></li>\n"
     html += "</ul>\n"
     return html
 
-# Generate final nav HTML
-tree = build_nav_tree(galleries)
-dynamic_nav_html = nav_html_from_tree(tree)
-
-manual_html = "<ul class='nav'>\n"
+# =========================
+# Combine manual + dynamic nav
+# =========================
+manual_html = "<ul class='menu'>\n"
 for item in manual_nav:
     manual_html += f"  <li><a href='{item['url']}'>{item['title']}</a></li>\n"
 manual_html += "</ul>\n"
+
+tree = build_nav_tree(galleries)
+dynamic_nav_html = nav_html_from_tree(tree)
 
 nav_html = manual_html + dynamic_nav_html
 
@@ -207,7 +202,6 @@ for g in galleries:
     for orig_path in images:
         img_file = os.path.basename(orig_path)
         web_path = os.path.join(web_base, g["slug"], img_file)
-
         resize_for_web_once(orig_path, web_path)
 
         caption = get_exif_caption(orig_path)
