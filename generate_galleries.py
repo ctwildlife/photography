@@ -110,7 +110,7 @@ for category in categories:
         "<!DOCTYPE html>",
         "<html lang='en'>",
         "<head>",
-        f"    <title>{category.capitalize()} Gallery</title>",
+        f"    <title>{category.capitalize()}</title>",
         "    <link rel='stylesheet' href='/photography/css/style.css'>",
         "</head>",
         "<body>",
