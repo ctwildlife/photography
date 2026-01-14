@@ -137,45 +137,37 @@ def build_nav_tree(galleries):
 # =========================
 # Render nav HTML with dropdown classes
 # =========================
-def nav_html_from_tree(tree):
-    def recurse(subtree, level=0):
-        if level == 0:
-            html = "<ul class='menu'>\n"
-        else:
-            html = "<ul class='dropdown-menu'>\n"
+def generate_nav_html(manual_nav, gallery_tree):
+    # Manual top-level links
+    manual_html = "<ul class='menu'>\n"
+    for item in manual_nav:
+        manual_html += f"  <li><a href='{item['url']}'>{item['title']}</a></li>\n"
+    manual_html += "</ul>\n"
 
-        for key, value in sorted(subtree.items()):
+    # Dynamic gallery tree
+    def recurse(tree, level=0):
+        html = "<ul class='dropdown-menu'>\n" if level > 0 else "<ul class='menu'>\n"
+        for key, value in sorted(tree.items()):
             if key == '_slug':
                 continue
             children = {k:v for k,v in value.items() if k != '_slug'}
             slug = value.get('_slug')
-
             if children:
-                # Dropdown with visible top-level link
                 html += f"<li class='dropdown'><a href='#'>{key.title()}</a>\n"
                 html += recurse(children, level+1)
                 html += "</li>\n"
             elif slug:
                 html += f"<li><a href='/photography/pages/{slug}.html'>{key.title()}</a></li>\n"
-
         html += "</ul>\n"
         return html
 
-    # Wrap everything in navbar div
-    return f"<div class='navbar'>\n{recurse(tree)}\n</div>"
+    return f"<div class='navbar'>\n{manual_html}{recurse(gallery_tree)}\n</div>"
 
 # =========================
 # Combine manual + dynamic nav
 # =========================
-manual_html = "<ul class='menu'>\n"
-for item in manual_nav:
-    manual_html += f"  <li><a href='{item['url']}'>{item['title']}</a></li>\n"
-manual_html += "</ul>\n"
-
 tree = build_nav_tree(galleries)
-dynamic_nav_html = nav_html_from_tree(tree)
-
-nav_html = manual_html + dynamic_nav_html
+nav_html = generate_nav_html(manual_nav, tree)
 
 # =========================
 # Generate HTML pages
