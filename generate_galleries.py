@@ -97,7 +97,7 @@ os.makedirs(pages_base, exist_ok=True)
 # =========================
 manual_nav = [
     {"title": "Home", "url": "/photography/index.html"},
-    # {"title": "About", "url": "/photography/pages/about.html"},
+     {"title": "Recent", "url": "/photography/pages/recent.html"},
 ]
 
 # =========================
@@ -137,16 +137,17 @@ def build_nav_tree(galleries):
 # =========================
 # Render nav HTML with dropdown classes
 # =========================
+# =========================
+# Render nav HTML with dropdown classes
+# =========================
 def generate_nav_html(manual_nav, gallery_tree):
-    # Manual top-level links
-    manual_html = "<ul class='menu'>\n"
-    for item in manual_nav:
-        manual_html += f"  <li><a href='{item['url']}'>{item['title']}</a></li>\n"
-    manual_html += "</ul>\n"
-
-    # Dynamic gallery tree
+    """
+    Generate a single navbar with:
+      - Manual links (e.g., Home) as top-level items
+      - Gallery folders as dropdowns
+    """
     def recurse(tree, level=0):
-        html = "<ul class='dropdown-menu'>\n" if level > 0 else "<ul class='menu'>\n"
+        html = "<ul class='dropdown-menu'>\n" if level > 0 else ""
         for key, value in sorted(tree.items()):
             if key == '_slug':
                 continue
@@ -158,10 +159,29 @@ def generate_nav_html(manual_nav, gallery_tree):
                 html += "</li>\n"
             elif slug:
                 html += f"<li><a href='/photography/pages/{slug}.html'>{key.title()}</a></li>\n"
-        html += "</ul>\n"
+        html += "</ul>\n" if level > 0 else ""
         return html
 
-    return f"<div class='navbar'>\n{manual_html}{recurse(gallery_tree)}\n</div>"
+    # Top-level menu container: manual links + gallery dropdowns
+    html = "<div class='navbar'>\n<ul class='menu'>\n"
+
+    # Add manual links first
+    for item in manual_nav:
+        html += f"  <li><a href='{item['url']}'>{item['title']}</a></li>\n"
+
+    # Add dynamic gallery links
+    for key, value in sorted(gallery_tree.items()):
+        children = {k:v for k,v in value.items() if k != '_slug'}
+        slug = value.get('_slug')
+        if children:
+            html += f"<li class='dropdown'><a href='#'>{key.title()}</a>\n"
+            html += recurse(children, level=1)
+            html += "</li>\n"
+        elif slug:
+            html += f"<li><a href='/photography/pages/{slug}.html'>{key.title()}</a></li>\n"
+
+    html += "</ul>\n</div>\n"
+    return html
 
 # =========================
 # Combine manual + dynamic nav
