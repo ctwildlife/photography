@@ -4,33 +4,34 @@ from PIL.ExifTags import TAGS
 from datetime import datetime
 import subprocess
 
-#git add Pages/* or git add . 
-#git commit -m "Updated gallery with new photos" 
-#git push 
-#python generate_galleries
-
 # =========================
 # Resize function
 # =========================
-def resize_for_web_once(original_path, web_path, max_size=(1920, 1920)):
+def resize_for_web_once(original_path, web_path, max_size=(1920, 1920), target_mb=1.0):
     """
-    Resize an image for the web if it doesn't exist yet or is larger than max_size.
+    Resize/compress an image for the web if it doesn't exist yet or is too large.
+    Tries to get the file under target_mb without changing dimensions.
     """
-    if os.path.exists(web_path):
-        img = Image.open(web_path)
-        if img.width <= max_size[0] and img.height <= max_size[1]:
-            # Already resized
-            return
+    # Check if already exists and under target size
+    if os.path.exists(web_path) and os.path.getsize(web_path) <= target_mb * 1024 * 1024:
+        return
 
     # Ensure the folder exists
     os.makedirs(os.path.dirname(web_path), exist_ok=True)
 
-    # Resize
     try:
         img = Image.open(original_path)
         img.thumbnail(max_size, Image.Resampling.LANCZOS)
-        img.save(web_path, format="JPEG", quality=85, optimize=True)
-        print(f"Created/resized web image: {web_path}")
+
+        # Start quality at 85, reduce until target file size reached
+        quality = 85
+        while quality >= 30:
+            img.save(web_path, format="JPEG", quality=quality, optimize=True)
+            size_mb = os.path.getsize(web_path) / (1024 * 1024)
+            if size_mb <= target_mb:
+                break
+            quality -= 5  # reduce quality gradually
+        print(f"Created/resized web image: {web_path} ({size_mb:.2f} MB, quality={quality})")
     except Exception as e:
         print(f"Error resizing {original_path}: {e}")
 
@@ -79,6 +80,19 @@ workspace_root = r"C:\Users\Colin Tiernan\Documents\GitHub\photography"
 pages_base = os.path.join(workspace_root, "pages")
 os.makedirs(pages_base, exist_ok=True)
 
+# =========================
+# Load nav.html menu
+# =========================
+includes_base = os.path.join(workspace_root, "includes")
+nav_file = os.path.join(includes_base, "nav.html")
+
+try:
+    with open(nav_file, "r", encoding="utf-8") as f:
+        nav_html = f.read()
+except FileNotFoundError:
+    print(f"Warning: {nav_file} not found. No menu will be inserted.")
+    nav_html = ""
+
 categories = ["birds", "mammals", "herps", "landscapes", "arthropods"]
 
 # =========================
@@ -100,9 +114,11 @@ for category in categories:
         "    <link rel='stylesheet' href='/photography/css/style.css'>",
         "</head>",
         "<body>",
+        nav_html,  # <-- Insert the menu here
         f"<h1>{category.capitalize()}</h1>",
         "<div class='gallery'>"
     ]
+
 
     for img_file in images:
         orig_path = os.path.join(folder, img_file)
