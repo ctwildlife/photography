@@ -151,6 +151,7 @@ def nav_html_from_tree(tree):
             slug = value.get('_slug')
 
             if children:
+                # Dropdown with visible top-level link
                 html += f"<li class='dropdown'><a href='#'>{key.title()}</a>\n"
                 html += recurse(children, level+1)
                 html += "</li>\n"
@@ -160,7 +161,8 @@ def nav_html_from_tree(tree):
         html += "</ul>\n"
         return html
 
-    return recurse(tree)
+    # Wrap everything in navbar div
+    return f"<div class='navbar'>\n{recurse(tree)}\n</div>"
 
 # =========================
 # Combine manual + dynamic nav
