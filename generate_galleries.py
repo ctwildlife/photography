@@ -8,10 +8,6 @@ import re
 # Resize function
 # =========================
 def resize_for_web_once(original_path, web_path, max_size=(1920, 1920), target_mb=1.0):
-    """
-    Resize/compress an image for the web if it doesn't exist yet or is too large.
-    Tries to get the file under target_mb without changing dimensions.
-    """
     if os.path.exists(web_path) and os.path.getsize(web_path) <= target_mb * 1024 * 1024:
         return
 
@@ -36,16 +32,11 @@ def resize_for_web_once(original_path, web_path, max_size=(1920, 1920), target_m
 # Find gallery folders
 # =========================
 def find_gallery_folders(base_path):
-    """
-    Returns a list of folders that contain image files.
-    """
     gallery_folders = []
-
     for root, dirs, files in os.walk(base_path):
         images = [f for f in files if f.lower().endswith((".jpg", ".jpeg", ".png"))]
         if images:
             gallery_folders.append(root)
-
     return gallery_folders
 
 # =========================
@@ -78,11 +69,6 @@ def get_exif_caption(image_path):
 # Italicize Latin names in parentheses
 # =========================
 def italicize_latin_names(caption):
-    """
-    Wrap text inside parentheses in <em> tags.
-    Example: 'Red Fox (Vulpes vulpes)' ->
-             'Red Fox (<em>Vulpes vulpes</em>)'
-    """
     if not caption:
         return caption
     return re.sub(r"\(([^)]+)\)", r"(<em>\1</em>)", caption)
@@ -109,24 +95,19 @@ def get_date_taken(image_path):
 # =========================
 # Base paths
 # =========================
-photos_base = "photos"        # original images
-web_base = "photos_web"       # resized images for web
+photos_base = "photos"
+web_base = "photos_web"
 workspace_root = r"C:\Users\Colin Tiernan\Documents\GitHub\photography"
 pages_base = os.path.join(workspace_root, "pages")
 os.makedirs(pages_base, exist_ok=True)
 
 # =========================
-# Load nav.html menu
+# Manual nav entries
 # =========================
-includes_base = os.path.join(workspace_root, "includes")
-nav_file = os.path.join(includes_base, "nav.html")
-
-try:
-    with open(nav_file, "r", encoding="utf-8") as f:
-        nav_html = f.read()
-except FileNotFoundError:
-    print(f"Warning: {nav_file} not found. No menu will be inserted.")
-    nav_html = ""
+manual_nav = [
+    {"title": "Home", "url": "/photography/pages/index.html"},
+    #{"title": "About", "url": "/photography/pages/about.html"},
+]
 
 # =========================
 # Build gallery model
@@ -146,11 +127,10 @@ for folder in gallery_folders:
         "folder": folder,
         "rel_path": rel_path,
         "path_parts": path_parts,
-        "slug": "-".join(path_parts),         # birds-songbirds-warblers
+        "slug": "-".join(path_parts),
         "title": path_parts[-1].replace("-", " ").title(),
         "images": images
     }
-
     galleries.append(gallery)
 
 print("\nDetected galleries:")
@@ -158,12 +138,57 @@ for g in galleries:
     print(f"- {g['slug']} ({len(g['images'])} images)")
 
 # =========================
+# Build nav tree from galleries
+# =========================
+def build_nav_tree(galleries):
+    tree = {}
+    for g in galleries:
+        node = tree
+        for part in g['path_parts']:
+            if part not in node:
+                node[part] = {}
+            node = node[part]
+        node['_slug'] = g['slug']
+    return tree
+
+def nav_html_from_tree(tree):
+    html = "<ul class='nav'>\n"
+    def recurse(subtree):
+        s = "<ul>\n"
+        for key, value in sorted(subtree.items()):
+            if key == '_slug':
+                continue
+            slug = value.get('_slug')
+            if slug:
+                s += f"<li><a href='/photography/pages/{slug}.html'>{key.title()}</a>"
+            else:
+                s += f"<li>{key.title()}"
+            children = {k:v for k,v in value.items() if k != '_slug'}
+            if children:
+                s += recurse(children)
+            s += "</li>\n"
+        s += "</ul>\n"
+        return s
+    html += recurse(tree)
+    html += "</ul>\n"
+    return html
+
+# Generate final nav HTML
+tree = build_nav_tree(galleries)
+dynamic_nav_html = nav_html_from_tree(tree)
+
+manual_html = "<ul class='nav'>\n"
+for item in manual_nav:
+    manual_html += f"  <li><a href='{item['url']}'>{item['title']}</a></li>\n"
+manual_html += "</ul>\n"
+
+nav_html = manual_html + dynamic_nav_html
+
+# =========================
 # Generate HTML pages
 # =========================
 for g in galleries:
     images = g["images"]
-
-    # Sort by DateTimeOriginal
     images.sort(key=lambda p: get_date_taken(p) or "", reverse=True)
 
     html_lines = [
