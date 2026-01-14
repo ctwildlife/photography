@@ -2,6 +2,7 @@ import os
 from PIL import Image
 from datetime import datetime
 import subprocess
+import json
 
 # =========================
 # Config
@@ -64,6 +65,9 @@ def get_caption(image_path):
     except Exception:
         return os.path.basename(image_path)
 
+# =========================
+# Gather all images
+# =========================
 def get_all_images(base_path):
     images = []
     for root, dirs, files in os.walk(base_path):
@@ -79,6 +83,21 @@ all_images = get_all_images(photos_base)
 all_images.sort(key=lambda p: get_date_taken(p) or datetime.min, reverse=True)
 recent_images = all_images[:max_photos]
 
+# Resize and build JSON data
+recent_photos_data = []
+for img_path in recent_images:
+    img_file = os.path.basename(img_path)
+    web_path = os.path.join(web_base, img_file)
+    resize_for_web_once(img_path, web_path)
+    caption = get_caption(img_path)
+    recent_photos_data.append({
+        "src": f"/photography/{web_base}/{img_file}",
+        "caption": caption
+    })
+
+# =========================
+# Generate HTML page
+# =========================
 html_lines = [
     "<!DOCTYPE html>",
     "<html lang='en'>",
@@ -92,15 +111,10 @@ html_lines = [
     "<div class='gallery'>"
 ]
 
-for img_path in recent_images:
-    img_file = os.path.basename(img_path)
-    web_path = os.path.join(web_base, img_file)
-    resize_for_web_once(img_path, web_path)
-
-    caption = get_caption(img_path)
+for item in recent_photos_data:
     html_lines.append("  <figure class='photo-block'>")
-    html_lines.append(f"    <img src='/photography/{web_base}/{img_file}' alt='{caption}' class='wildlife-photo'>")
-    html_lines.append(f"    <figcaption class='caption'>{caption}</figcaption>")
+    html_lines.append(f"    <img src='{item['src']}' alt='{item['caption']}' class='wildlife-photo'>")
+    html_lines.append(f"    <figcaption class='caption'>{item['caption']}</figcaption>")
     html_lines.append("  </figure>")
 
 html_lines.append("</div>")
@@ -111,3 +125,13 @@ with open(output_file, "w", encoding="utf-8") as f:
     f.write("\n".join(html_lines))
 
 print(f"Recent photos page generated at {output_file}")
+
+# =========================
+# Save JSON for slideshow
+# =========================
+json_path = os.path.join("pages", "recent_photos.json")
+os.makedirs(os.path.dirname(json_path), exist_ok=True)
+with open(json_path, "w", encoding="utf-8") as f:
+    json.dump(recent_photos_data, f, indent=2)
+
+print(f"Saved recent photos JSON to {json_path}")

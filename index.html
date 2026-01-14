@@ -1,104 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>ct wildlife</title>
-  <link rel="stylesheet" href="css/style.css">
+<script>
+const slideshow = document.getElementById("slideshow");
+let images = [];
+let captions = [];
+let index = 0;
 
-  <!-- OPTIONAL: slideshow styling -->
-  <style>
-    .slideshow-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 40px;
-    }
+// Load recent photos JSON with captions
+fetch('/photography/recent_photos.json')
+  .then(response => response.json())
+  .then(data => {
+    if (data.length === 0) return;
 
-    .slideshow-container img {
-      max-width: 90%;
-      max-height: 70vh;
-      object-fit: contain;
-    }
-  </style>
-</head>
-<body>
+    images = data.map(item => item.src);
+    captions = data.map(item => item.caption);
 
-  <!-- Navigation -->
-  <nav class="navbar">
-    <ul class="menu">
-      <li><a href="../index.html">Home</a></li>
+    // Initialize first image & caption
+    slideshow.src = images[0];
+    slideshow.alt = captions[0];
 
-      <li class="dropdown">
-        <a href="#">Birds</a>
-        <ul class="dropdown-menu">
-          <li><a href="pages/birds.html">Songbirds</a></li>
-          <li><a href="shorebirds.html">Shorebirds</a></li>
-          <li><a href="raptors.html">Raptors</a></li>
-          <li><a href="grouse.html">Grouse</a></li>
-          <li><a href="warblers.html">Warblers</a></li>
-          <li><a href="corvids.html">Corvids</a></li>
-          <li><a href="waterfowl.html">Waterfowl</a></li>
-          <li><a href="miscellaneous.html">Miscellaneous</a></li>
-        </ul>
-      </li>
+    const captionEl = document.createElement("div");
+    captionEl.id = "slideshow-caption";
+    captionEl.style.textAlign = "center";
+    captionEl.style.marginTop = "10px";
+    captionEl.style.fontStyle = "italic";
+    captionEl.innerText = captions[0];
+    slideshow.parentNode.appendChild(captionEl);
 
-      <li class="dropdown">
-        <a href="#">Mammals</a>
-        <ul class="dropdown-menu">
-          <li><a href="/photography/pages/mammals.html">Mammals</a></li>
-        </ul>
-      </li>
-
-      <li class="dropdown">
-        <a href="#">Herps</a>
-        <ul class="dropdown-menu">
-          <li><a href="/photography/pages/herps.html">Reptiles & Amphibians</a></li>
-        </ul>
-      </li>
-
-      <li class="dropdown">
-        <a href="#">Arthropods</a>
-        <ul class="dropdown-menu">
-          <li><a href="/photography/pages/arthropods.html">Insects & Spiders</a></li>
-        </ul>
-      </li>
-
-      <li class="dropdown">
-        <a href="#">Landscapes</a>
-        <ul class="dropdown-menu">
-          <li><a href="/photography/pages/landscapes.html">Landscapes</a></li>
-        </ul>
-      </li>
-
-    </ul>
-  </nav>
-
-  <!-- Page content -->
-  <!-- 
-<h1>xyz</h1>
-  <p>wildlife.</p>-->
-
-  <!-- ✅ Slideshow -->
-  <div class="slideshow-container">
-    <img id="slideshow" src="/photography/photos/birds/spotted-towhee.jpg" alt="Wildlife Slideshow">
-  </div>
-
-  <!-- ✅ Slideshow script -->
-  <script>
-    const images = [
-      "/photography/photos/birds/spotted-towhee.jpg",
-      "/photography/photos/birds/wilsons-snipe.jpg",
-      "/photography/photos/birds/western-meadowlark.jpg"
-    ];
-
-    let index = 0;
-    const slideshow = document.getElementById("slideshow");
-
+    // Start slideshow
     setInterval(() => {
       index = (index + 1) % images.length;
       slideshow.src = images[index];
-    }, 5000); // change every 5 seconds
-  </script>
-
-</body>
-</html>
+      slideshow.alt = captions[index];
+      captionEl.innerText = captions[index];
+    }, 5000);
+  })
+  .catch(err => console.error("Error loading recent photos JSON:", err));
+</script>
