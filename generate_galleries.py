@@ -1,8 +1,8 @@
 import os
 from PIL import Image
-from PIL.ExifTags import TAGS
 from datetime import datetime
 import subprocess
+import re
 
 # =========================
 # Resize function
@@ -12,31 +12,54 @@ def resize_for_web_once(original_path, web_path, max_size=(1920, 1920), target_m
     Resize/compress an image for the web if it doesn't exist yet or is too large.
     Tries to get the file under target_mb without changing dimensions.
     """
-    # Check if already exists and under target size
     if os.path.exists(web_path) and os.path.getsize(web_path) <= target_mb * 1024 * 1024:
         return
 
-    # Ensure the folder exists
     os.makedirs(os.path.dirname(web_path), exist_ok=True)
 
     try:
         img = Image.open(original_path)
         img.thumbnail(max_size, Image.Resampling.LANCZOS)
 
-        # Start quality at 85, reduce until target file size reached
         quality = 85
         while quality >= 30:
             img.save(web_path, format="JPEG", quality=quality, optimize=True)
             size_mb = os.path.getsize(web_path) / (1024 * 1024)
             if size_mb <= target_mb:
                 break
-            quality -= 5  # reduce quality gradually
+            quality -= 5
         print(f"Created/resized web image: {web_path} ({size_mb:.2f} MB, quality={quality})")
     except Exception as e:
         print(f"Error resizing {original_path}: {e}")
 
 # =========================
-# Function to get image caption from EXIF metadata
+# Find gallery folders
+# =========================
+def find_gallery_folders(base_path):
+    """
+    Returns a list of folders that contain image files.
+    """
+    gallery_folders = []
+
+    for root, dirs, files in os.walk(base_path):
+        images = [f for f in files if f.lower().endswith((".jpg", ".jpeg", ".png"))]
+        if images:
+            gallery_folders.append(root)
+
+    return gallery_folders
+
+# =========================
+# Get images in a folder (non-recursive)
+# =========================
+def get_images_in_folder(folder):
+    return [
+        os.path.join(folder, f)
+        for f in os.listdir(folder)
+        if f.lower().endswith((".jpg", ".jpeg", ".png"))
+    ]
+
+# =========================
+# Get EXIF caption
 # =========================
 def get_exif_caption(image_path):
     try:
@@ -52,7 +75,20 @@ def get_exif_caption(image_path):
         return None
 
 # =========================
-# Function to get EXIF DateTimeOriginal
+# Italicize Latin names in parentheses
+# =========================
+def italicize_latin_names(caption):
+    """
+    Wrap text inside parentheses in <em> tags.
+    Example: 'Red Fox (Vulpes vulpes)' ->
+             'Red Fox (<em>Vulpes vulpes</em>)'
+    """
+    if not caption:
+        return caption
+    return re.sub(r"\(([^)]+)\)", r"(<em>\1</em>)", caption)
+
+# =========================
+# Get EXIF DateTimeOriginal
 # =========================
 def get_date_taken(image_path):
     try:
@@ -73,9 +109,8 @@ def get_date_taken(image_path):
 # =========================
 # Base paths
 # =========================
-photos_base = "photos"  # originals
-web_base = "photos_web" # resized copies for web
-
+photos_base = "photos"        # original images
+web_base = "photos_web"       # resized images for web
 workspace_root = r"C:\Users\Colin Tiernan\Documents\GitHub\photography"
 pages_base = os.path.join(workspace_root, "pages")
 os.makedirs(pages_base, exist_ok=True)
@@ -93,62 +128,84 @@ except FileNotFoundError:
     print(f"Warning: {nav_file} not found. No menu will be inserted.")
     nav_html = ""
 
-categories = ["birds", "mammals", "herps", "landscapes", "arthropods"]
+# =========================
+# Build gallery model
+# =========================
+gallery_folders = find_gallery_folders(photos_base)
+galleries = []
+
+for folder in gallery_folders:
+    images = get_images_in_folder(folder)
+    if not images:
+        continue
+
+    rel_path = os.path.relpath(folder, photos_base)
+    path_parts = rel_path.split(os.sep)
+
+    gallery = {
+        "folder": folder,
+        "rel_path": rel_path,
+        "path_parts": path_parts,
+        "slug": "-".join(path_parts),         # birds-songbirds-warblers
+        "title": path_parts[-1].replace("-", " ").title(),
+        "images": images
+    }
+
+    galleries.append(gallery)
+
+print("\nDetected galleries:")
+for g in galleries:
+    print(f"- {g['slug']} ({len(g['images'])} images)")
 
 # =========================
-# Loop over categories
+# Generate HTML pages
 # =========================
-for category in categories:
-    folder = os.path.join(photos_base, category)
-    images = [f for f in os.listdir(folder) if f.lower().endswith((".jpg", ".jpeg", ".png"))]
+for g in galleries:
+    images = g["images"]
 
     # Sort by DateTimeOriginal
-    images.sort(key=lambda f: get_date_taken(os.path.join(folder, f)) or "", reverse=True)
+    images.sort(key=lambda p: get_date_taken(p) or "", reverse=True)
 
-    # Begin HTML
     html_lines = [
         "<!DOCTYPE html>",
         "<html lang='en'>",
         "<head>",
-        f"    <title>{category.capitalize()}</title>",
+        f"    <title>{g['title']}</title>",
         "    <link rel='stylesheet' href='/photography/css/style.css'>",
         "</head>",
         "<body>",
-        nav_html,  # <-- Insert the menu here
-        f"<h1>{category.capitalize()}</h1>",
+        nav_html,
+        f"<h1>{g['title']}</h1>",
         "<div class='gallery'>"
     ]
 
+    for orig_path in images:
+        img_file = os.path.basename(orig_path)
+        web_path = os.path.join(web_base, g["slug"], img_file)
 
-    for img_file in images:
-        orig_path = os.path.join(folder, img_file)
-        web_path = os.path.join(web_base, category, img_file)
-
-        # Resize if needed
         resize_for_web_once(orig_path, web_path)
 
-        # Caption
         caption = get_exif_caption(orig_path)
         if not caption:
             caption = os.path.splitext(img_file)[0].replace("-", " ").replace("_", " ").capitalize()
+        else:
+            caption = italicize_latin_names(caption)
 
         alt_text = caption.split(".")[0].strip()
-        img_src = f"/photography/{web_base}/{category}/{img_file}"  # use resized copy
+        img_src = f"/photography/{web_base}/{g['slug']}/{img_file}"
 
-        # HTML
         html_lines.append("  <figure class='photo-block'>")
         html_lines.append(f"    <img src='{img_src}' alt='{alt_text}' class='wildlife-photo'>")
         html_lines.append(f"    <figcaption class='caption'>{caption}</figcaption>")
         html_lines.append("  </figure>")
 
-    # Close HTML
     html_lines.append("</div>")
     html_lines.append("</body></html>")
 
-    # Write file
-    out_file = os.path.join(pages_base, f"{category}.html")
+    out_file = os.path.join(pages_base, f"{g['slug']}.html")
     with open(out_file, "w", encoding="utf-8") as f:
         f.write("\n".join(html_lines))
-    print(f"Generated {category}.html at {out_file}")
+
+    print(f"Generated {g['slug']}.html")
 
 print("All galleries generated successfully.")
