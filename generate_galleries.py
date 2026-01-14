@@ -138,33 +138,29 @@ def build_nav_tree(galleries):
 # Render nav HTML with dropdown classes
 # =========================
 def nav_html_from_tree(tree):
-    def recurse(subtree):
-        html = "<ul class='dropdown-menu'>\n"
+    def recurse(subtree, level=0):
+        if level == 0:
+            html = "<ul class='menu'>\n"
+        else:
+            html = "<ul class='dropdown-menu'>\n"
+
         for key, value in sorted(subtree.items()):
             if key == '_slug':
                 continue
             children = {k:v for k,v in value.items() if k != '_slug'}
             slug = value.get('_slug')
+
             if children:
                 html += f"<li class='dropdown'><a href='#'>{key.title()}</a>\n"
-                html += recurse(children)
+                html += recurse(children, level+1)
                 html += "</li>\n"
             elif slug:
                 html += f"<li><a href='/photography/pages/{slug}.html'>{key.title()}</a></li>\n"
+
         html += "</ul>\n"
         return html
-    html = "<ul class='menu'>\n"
-    for key, value in sorted(tree.items()):
-        children = {k:v for k,v in value.items() if k != '_slug'}
-        slug = value.get('_slug')
-        if children:
-            html += f"  <li class='dropdown'><a href='#'>{key.title()}</a>\n"
-            html += recurse(children)
-            html += "  </li>\n"
-        elif slug:
-            html += f"  <li><a href='/photography/pages/{slug}.html'>{key.title()}</a></li>\n"
-    html += "</ul>\n"
-    return html
+
+    return recurse(tree)
 
 # =========================
 # Combine manual + dynamic nav
