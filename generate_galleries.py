@@ -1,6 +1,7 @@
 import os
 from PIL import Image
 from PIL.ExifTags import TAGS
+from datetime import datetime
 
 #git add Pages/* or git add . 
 #git commit -m "Updated gallery with new photos" 
@@ -15,6 +16,7 @@ import subprocess
 def get_exif_caption(image_path):
     """Read caption from XMP/EXIF using exiftool (PhotoMechanic-safe)."""
     try:
+        # Look for the PhotoMechanic 'Caption-Abstract' field
         result = subprocess.run(
             ["exiftool", "-Description", "-s3", image_path],
             capture_output=True,
@@ -29,25 +31,30 @@ def get_exif_caption(image_path):
 # =========================
 # Function to get EXIF DateTimeOriginal for sorting
 # =========================
-def get_date_taken(img_path):
-    """Return the DateTimeOriginal from EXIF, or None if missing."""
+def get_date_taken(image_path):
+    """Return DateTimeOriginal as a date object, or None if missing."""
     try:
-        img = Image.open(img_path)
-        exif_data = img._getexif()
-        if not exif_data:
+        # Ask exiftool for DateTimeOriginal
+        result = subprocess.run(
+            ["exiftool", "-DateTimeOriginal", "-s3", image_path],
+            capture_output=True,
+            text=True
+        )
+        date_str = result.stdout.strip()  # e.g., "2022:04:17 09:16:01"
+        if not date_str:
             return None
-        for tag_id, value in exif_data.items():
-            tag = TAGS.get(tag_id, tag_id)
-            if tag == "DateTimeOriginal":
-                return value  # format "YYYY:MM:DD HH:MM:SS"
-    except:
+        # Only take YYYY:MM:DD
+        date_part = date_str.split(" ")[0]
+        return datetime.strptime(date_part, "%Y:%m:%d").date()
+    except Exception as e:
+        print(f"ExifTool error on {image_path}: {e}")
         return None
 
 # =========================
 # Base paths
 # =========================
 photos_base = "photos"     # folder where your images live
-pages_base = "pages"       # folder for generated HTML
+pages_base = os.path.join(os.path.dirname(__file__), "pages")   # folder for generated HTML
 categories = ["birds", "mammals", "herps", "landscapes", "arthropods"]
 
 # =========================
@@ -84,6 +91,9 @@ for category in categories:
         caption = get_exif_caption(img_path)
         if not caption:
             caption = os.path.splitext(img_file)[0].replace("-", " ").replace("_", " ").capitalize()
+
+        print(f"File: {img_file}")
+        print(f"  Caption: {caption} | Date Taken: {get_date_taken(img_path)}")
 
         # Alt = species (text before first period)
         alt_text = caption.split(".")[0].strip()
