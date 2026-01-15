@@ -28,6 +28,7 @@ h1 {
 /* Each photo + caption block */
 .photo-block {
   margin-bottom: 60px; /*creates space between photos */
+  text-align: center;
 }
 
 /* Images */
