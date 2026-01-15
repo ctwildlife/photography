@@ -190,6 +190,18 @@ tree = build_nav_tree(galleries)
 nav_html = generate_nav_html(manual_nav, tree)
 
 # =========================
+# Write shared nav include
+# =========================
+includes_dir = os.path.join(workspace_root, "includes")
+os.makedirs(includes_dir, exist_ok=True)
+
+nav_include_path = os.path.join(includes_dir, "nav.html")
+with open(nav_include_path, "w", encoding="utf-8") as f:
+    f.write(nav_html)
+
+print(f"Nav written to {nav_include_path}")
+
+# =========================
 # Generate HTML pages
 # =========================
 for g in galleries:

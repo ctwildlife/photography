@@ -9,12 +9,16 @@
 <body>
 
   <!-- NAV (temporary placeholder) -->
-  <nav class="navbar">
-    <ul class="menu">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="pages/recent.html">Recent</a></li>
-    </ul>
-  </nav>
+<div id="nav-placeholder"></div>
+
+<script>
+fetch("includes/nav.html")
+  .then(r => r.text())
+  .then(html => {
+    document.getElementById("nav-placeholder").innerHTML = html;
+  });
+</script>
+
 
   <!-- SLIDESHOW -->
   <div class="slideshow-container">
