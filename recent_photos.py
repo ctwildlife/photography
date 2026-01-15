@@ -3,6 +3,7 @@ from PIL import Image
 from datetime import datetime
 import subprocess
 import json
+import re
 
 # =========================
 # Paths
@@ -70,6 +71,15 @@ def get_caption(image_path):
             return os.path.splitext(os.path.basename(image_path))[0].replace("-", " ").capitalize()
     except Exception:
         return os.path.basename(image_path)
+    
+
+def italicize_latin_names(caption):
+    """
+    Wrap any text inside parentheses in <em> tags.
+    """
+    if not caption:
+        return caption
+    return re.sub(r"\(([^)]+)\)", r"(<em>\1</em>)", caption)
 
 # =========================
 # Gather all images
@@ -96,6 +106,7 @@ for img_path in recent_images:
     web_path = os.path.join(web_base, img_file)
     resize_for_web_once(img_path, web_path)
     caption = get_caption(img_path)
+    caption = italicize_latin_names(caption)
     recent_photos_data.append({
         "src": f"/photography/{web_base}/{img_file}",
         "caption": caption
@@ -119,7 +130,7 @@ html_lines = [
     "<html lang='en'>",
     "<head>",
     "    <meta charset='utf-8'>",
-    "    <title>Recent Photos</title>",
+    "    <title>Recent photos</title>",
     "    <link rel='stylesheet' href='/photography/css/style.css'>",
     "</head>",
     "<body>",
