@@ -119,14 +119,6 @@ h1 {
    SLIDESHOW
    ========================= */
 
-.slideshow-container {
-  display: flex;
-  flex-direction: column; /* stack children vertically */
-  justify-content: center;
-  align-items: center;
-  margin: 60px auto;
-}
-
 .slideshow-container img {
   max-width: 90%;
   max-height: 70vh;
@@ -139,4 +131,12 @@ h1 {
   font-style: normal !important;
   text-align: center;
   margin-top: 10px;
+}
+
+.slideshow-container {
+  display: flex;
+  flex-direction: column; /* stack vertically */
+  justify-content: center;
+  align-items: center;
+  margin: 60px auto;
 }
