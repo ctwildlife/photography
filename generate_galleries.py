@@ -3,10 +3,33 @@ from PIL import Image
 from datetime import datetime
 import subprocess
 import re
+import json
 
 # =========================
-# Resize function
+# Paths
 # =========================
+photos_base = "photos"
+web_base = "photos_web"
+workspace_root = r"C:\Users\Colin Tiernan\Documents\GitHub\photography"
+pages_base = os.path.join(workspace_root, "pages")
+includes_dir = os.path.join(workspace_root, "includes")
+
+os.makedirs(pages_base, exist_ok=True)
+os.makedirs(includes_dir, exist_ok=True)
+
+# =========================
+# Manual nav entries
+# =========================
+manual_nav = [
+    {"title": "Home", "url": "/photography/index.html"},
+    {"title": "Recent", "url": "/photography/pages/recent.html"},
+    {"title": "Search", "url": "/photography/pages/search.html"}
+]
+
+# =========================
+# Helper functions
+# =========================
+
 def resize_for_web_once(original_path, web_path, max_size=(1920, 1920), target_mb=1.0):
     if os.path.exists(web_path) and os.path.getsize(web_path) <= target_mb * 1024 * 1024:
         return
@@ -25,9 +48,6 @@ def resize_for_web_once(original_path, web_path, max_size=(1920, 1920), target_m
     except Exception as e:
         print(f"Error resizing {original_path}: {e}")
 
-# =========================
-# Find gallery folders
-# =========================
 def find_gallery_folders(base_path):
     gallery_folders = []
     for root, dirs, files in os.walk(base_path):
@@ -36,9 +56,6 @@ def find_gallery_folders(base_path):
             gallery_folders.append(root)
     return gallery_folders
 
-# =========================
-# Get images in a folder
-# =========================
 def get_images_in_folder(folder):
     return [
         os.path.join(folder, f)
@@ -46,15 +63,11 @@ def get_images_in_folder(folder):
         if f.lower().endswith((".jpg", ".jpeg", ".png"))
     ]
 
-# =========================
-# EXIF functions
-# =========================
 def get_exif_caption(image_path):
     try:
         result = subprocess.run(
             ["exiftool", "-Description", "-s3", image_path],
-            capture_output=True,
-            text=True
+            capture_output=True, text=True
         )
         caption = result.stdout.strip()
         return caption if caption else None
@@ -71,8 +84,7 @@ def get_date_taken(image_path):
     try:
         result = subprocess.run(
             ["exiftool", "-DateTimeOriginal", "-s3", image_path],
-            capture_output=True,
-            text=True
+            capture_output=True, text=True
         )
         date_str = result.stdout.strip()
         if not date_str:
@@ -84,27 +96,12 @@ def get_date_taken(image_path):
         return None
 
 # =========================
-# Paths
+# Build galleries & nav
 # =========================
-photos_base = "photos"
-web_base = "photos_web"
-workspace_root = r"C:\Users\Colin Tiernan\Documents\GitHub\photography"
-pages_base = os.path.join(workspace_root, "pages")
-os.makedirs(pages_base, exist_ok=True)
 
-# =========================
-# Manual nav entries
-# =========================
-manual_nav = [
-    {"title": "Home", "url": "/photography/index.html"},
-     {"title": "Recent", "url": "/photography/pages/recent.html"},
-]
-
-# =========================
-# Build galleries
-# =========================
 gallery_folders = find_gallery_folders(photos_base)
 galleries = []
+
 for folder in gallery_folders:
     images = get_images_in_folder(folder)
     if not images:
@@ -120,9 +117,6 @@ for folder in gallery_folders:
         "images": images
     })
 
-# =========================
-# Build nav tree
-# =========================
 def build_nav_tree(galleries):
     tree = {}
     for g in galleries:
@@ -134,23 +128,11 @@ def build_nav_tree(galleries):
         node['_slug'] = g['slug']
     return tree
 
-# =========================
-# Render nav HTML with dropdown classes
-# =========================
-# =========================
-# Render nav HTML with dropdown classes
-# =========================
 def generate_nav_html(manual_nav, gallery_tree):
-    """
-    Generate a single navbar with:
-      - Manual links (e.g., Home) as top-level items
-      - Gallery folders as dropdowns
-    """
     def recurse(tree, level=0):
         html = "<ul class='dropdown-menu'>\n" if level > 0 else ""
         for key, value in sorted(tree.items()):
-            if key == '_slug':
-                continue
+            if key == '_slug': continue
             children = {k:v for k,v in value.items() if k != '_slug'}
             slug = value.get('_slug')
             if children:
@@ -162,14 +144,9 @@ def generate_nav_html(manual_nav, gallery_tree):
         html += "</ul>\n" if level > 0 else ""
         return html
 
-    # Top-level menu container: manual links + gallery dropdowns
     html = "<div class='navbar'>\n<ul class='menu'>\n"
-
-    # Add manual links first
     for item in manual_nav:
         html += f"  <li><a href='{item['url']}'>{item['title']}</a></li>\n"
-
-    # Add dynamic gallery links
     for key, value in sorted(gallery_tree.items()):
         children = {k:v for k,v in value.items() if k != '_slug'}
         slug = value.get('_slug')
@@ -179,31 +156,24 @@ def generate_nav_html(manual_nav, gallery_tree):
             html += "</li>\n"
         elif slug:
             html += f"<li><a href='/photography/pages/{slug}.html'>{key.title()}</a></li>\n"
-
     html += "</ul>\n</div>\n"
     return html
 
-# =========================
-# Combine manual + dynamic nav
-# =========================
-tree = build_nav_tree(galleries)
-nav_html = generate_nav_html(manual_nav, tree)
+nav_tree = build_nav_tree(galleries)
+nav_html = generate_nav_html(manual_nav, nav_tree)
 
-# =========================
-# Write shared nav include
-# =========================
-includes_dir = os.path.join(workspace_root, "includes")
-os.makedirs(includes_dir, exist_ok=True)
-
+# Write nav include
 nav_include_path = os.path.join(includes_dir, "nav.html")
 with open(nav_include_path, "w", encoding="utf-8") as f:
     f.write(nav_html)
-
 print(f"Nav written to {nav_include_path}")
 
 # =========================
-# Generate HTML pages
+# Generate gallery pages
 # =========================
+
+all_photos = []
+
 for g in galleries:
     images = g["images"]
     images.sort(key=lambda p: get_date_taken(p) or "", reverse=True)
@@ -226,27 +196,85 @@ for g in galleries:
         web_path = os.path.join(web_base, g["slug"], img_file)
         resize_for_web_once(orig_path, web_path)
 
-        caption = get_exif_caption(orig_path)
-        if not caption:
-            caption = os.path.splitext(img_file)[0].replace("-", " ").replace("_", " ").capitalize()
-        else:
-            caption = italicize_latin_names(caption)
-
+        caption = get_exif_caption(orig_path) or os.path.splitext(img_file)[0].replace("-", " ").replace("_", " ").capitalize()
+        caption = italicize_latin_names(caption)
         alt_text = caption.split(".")[0].strip()
         img_src = f"/photography/{web_base}/{g['slug']}/{img_file}"
+
+        date_taken = get_date_taken(orig_path)
+        date_str = date_taken.isoformat() if date_taken else ""
+
+        all_photos.append({
+            "caption": caption,
+            "url": img_src,
+            "date": date_str
+        })
 
         html_lines.append("  <figure class='photo-block'>")
         html_lines.append(f"    <img src='{img_src}' alt='{alt_text}' class='wildlife-photo'>")
         html_lines.append(f"    <figcaption class='caption'>{caption}</figcaption>")
         html_lines.append("  </figure>")
 
-    html_lines.append("</div>")
-    html_lines.append("</body></html>")
+    html_lines.append("</div></body></html>")
 
     out_file = os.path.join(pages_base, f"{g['slug']}.html")
     with open(out_file, "w", encoding="utf-8") as f:
         f.write("\n".join(html_lines))
-
     print(f"Generated {g['slug']}.html")
 
-print("All galleries generated successfully.")
+# =========================
+# Write photos_index.json
+# =========================
+
+json_path = os.path.join(workspace_root, "photos_index.json")
+with open(json_path, "w", encoding="utf-8") as f:
+    json.dump(all_photos, f, indent=2, ensure_ascii=False)
+print(f"Photo index JSON written to {json_path}")
+
+# =========================
+# Generate search page
+# =========================
+
+search_html_lines = [
+    "<!DOCTYPE html>",
+    "<html lang='en'>",
+    "<head>",
+    "    <meta charset='UTF-8'>",
+    "    <title>Photo Search</title>",
+    "    <link rel='stylesheet' href='/photography/css/style.css'>",
+    "</head>",
+    "<body>",
+    nav_html,
+    "<h1>Search Photos</h1>",
+    "<input type='text' id='searchBox' placeholder='Search photos...'>",
+    "<div id='searchResults' class='gallery'></div>",
+    "<script>",
+    "fetch('/photography/photos_index.json')",
+    "  .then(res => res.json())",
+    "  .then(allPhotos => {",
+    "    const searchBox = document.getElementById('searchBox');",
+    "    const resultsDiv = document.getElementById('searchResults');",
+    "    searchBox.addEventListener('input', () => {",
+    "      const query = searchBox.value.toLowerCase();",
+    "      const filtered = allPhotos",
+    "        .filter(photo => photo.caption.toLowerCase().includes(query))",
+    "        .sort((a, b) => new Date(b.date) - new Date(a.date));",
+    "      resultsDiv.innerHTML = filtered.map(photo =>",
+    "        `<figure class='photo-block'>` +",
+    "        `<img src='${photo.url}' alt='${photo.caption}' class='wildlife-photo'>` +",
+    "        `<figcaption class='caption'>${photo.caption}</figcaption>` +",
+    "        `</figure>`",
+    "      ).join('');",
+    "    });",
+    "  });",
+    "</script>",
+    "</body>",
+    "</html>"
+]
+
+search_out_file = os.path.join(pages_base, "search.html")
+with open(search_out_file, "w", encoding="utf-8") as f:
+    f.write("\n".join(search_html_lines))
+print(f"Generated search.html with updated nav at {search_out_file}")
+
+print("All galleries and search page generated successfully.")
