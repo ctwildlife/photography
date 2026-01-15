@@ -53,7 +53,7 @@ fetch("includes/nav.html")
         captionEl.style.textAlign = "center";
         captionEl.style.marginTop = "10px";
         captionEl.style.fontStyle = "normal";
-        captionEl.innerText = captions[0];
+        captionEl.innerHTML = captions[0];
         slideshow.after(captionEl);
 
         setInterval(() => {
