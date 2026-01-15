@@ -5,6 +5,12 @@ import subprocess
 import json
 
 # =========================
+# Paths
+# =========================
+workspace_root = os.path.dirname(os.path.abspath(__file__))
+nav_include_path = os.path.join(workspace_root, "includes", "nav.html")
+
+# =========================
 # Config
 # =========================
 photos_base = "photos"
@@ -96,6 +102,16 @@ for img_path in recent_images:
     })
 
 # =========================
+# Load shared nav
+# =========================
+if os.path.exists(nav_include_path):
+    with open(nav_include_path, "r", encoding="utf-8") as f:
+        nav_html = f.read()
+else:
+    nav_html = ""  # fail gracefully
+    print("WARNING: nav.html not found, nav will be missing")
+
+# =========================
 # Generate HTML page
 # =========================
 html_lines = [
@@ -107,7 +123,8 @@ html_lines = [
     "    <link rel='stylesheet' href='/photography/css/style.css'>",
     "</head>",
     "<body>",
-    "<h1>Recent Photos</h1>",
+    "<nav_html>",
+    "<h1>New photos</h1>",
     "<div class='gallery'>"
 ]
 
