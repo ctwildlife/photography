@@ -1,37 +1,66 @@
-<script>
-const slideshow = document.getElementById("slideshow");
-let images = [];
-let captions = [];
-let index = 0;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ct wildlife</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
 
-// Load recent photos JSON with captions
-fetch('photography/recent_photos.json')
-  .then(response => response.json())
-  .then(data => {
-    if (data.length === 0) return;
+<body>
 
-    images = data.map(item => item.src);
-    captions = data.map(item => item.caption);
+  <!-- NAV (temporary placeholder) -->
+  <nav class="navbar">
+    <ul class="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="pages/recent.html">Recent</a></li>
+    </ul>
+  </nav>
 
-    // Initialize first image & caption
-    slideshow.src = images[0];
-    slideshow.alt = captions[0];
+  <!-- SLIDESHOW -->
+  <div class="slideshow-container">
+    <img
+      id="slideshow"
+      src=""
+      alt="Recent wildlife photo"
+      style="max-width:90%; max-height:70vh;"
+    >
+  </div>
 
-    const captionEl = document.createElement("div");
-    captionEl.id = "slideshow-caption";
-    captionEl.style.textAlign = "center";
-    captionEl.style.marginTop = "10px";
-    captionEl.style.fontStyle = "italic";
-    captionEl.innerText = captions[0];
-    slideshow.parentNode.appendChild(captionEl);
+  <!-- SLIDESHOW SCRIPT -->
+  <script>
+    const slideshow = document.getElementById("slideshow");
+    let images = [];
+    let captions = [];
+    let index = 0;
 
-    // Start slideshow
-    setInterval(() => {
-      index = (index + 1) % images.length;
-      slideshow.src = images[index];
-      slideshow.alt = captions[index];
-      captionEl.innerText = captions[index];
-    }, 5000);
-  })
-  .catch(err => console.error("Error loading recent photos JSON:", err));
-</script>
+    fetch("recent_photos.json")
+      .then(r => r.json())
+      .then(data => {
+        if (!data.length) return;
+
+        images = data.map(d => d.src);
+        captions = data.map(d => d.caption);
+
+        slideshow.src = images[0];
+        slideshow.alt = captions[0];
+
+        const captionEl = document.createElement("div");
+        captionEl.id = "slideshow-caption";
+        captionEl.style.textAlign = "center";
+        captionEl.style.marginTop = "10px";
+        captionEl.style.fontStyle = "italic";
+        captionEl.innerText = captions[0];
+        slideshow.after(captionEl);
+
+        setInterval(() => {
+          index = (index + 1) % images.length;
+          slideshow.src = images[index];
+          slideshow.alt = captions[index];
+          captionEl.innerText = captions[index];
+        }, 5000);
+      })
+      .catch(err => console.error(err));
+  </script>
+
+</body>
+</html>
