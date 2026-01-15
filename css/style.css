@@ -133,6 +133,10 @@ h1 {
   margin-top: 10px;
 }
 
+#slideshow-caption i {
+  font-style: italic; /* force italics for <i> elements */
+}
+
 .slideshow-container {
   display: flex;
   flex-direction: column; /* stack vertically */

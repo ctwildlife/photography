@@ -75,11 +75,13 @@ def get_caption(image_path):
 
 def italicize_latin_names(caption):
     """
-    Wrap any text inside parentheses in <em> tags.
+    Wrap the first parenthetical (Latin name) in <em> tags.
     """
     if not caption:
         return caption
-    return re.sub(r"\(([^)]+)\)", r"(<em>\1</em>)", caption)
+
+    # Match parentheses containing at least one uppercase letter (to catch Latin names)
+    return re.sub(r"\(([^)A-Z]*[A-Z][^)]+)\)", r"(<em>\1</em>)", caption, count=1)
 
 # =========================
 # Gather all images
