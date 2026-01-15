@@ -123,7 +123,7 @@ html_lines = [
     "    <link rel='stylesheet' href='/photography/css/style.css'>",
     "</head>",
     "<body>",
-    "<nav_html>",
+    nav_html,
     "<h1>New photos</h1>",
     "<div class='gallery'>"
 ]
