@@ -121,6 +121,7 @@ h1 {
 
 .slideshow-container {
   display: flex;
+  flex-direction: column; /* stack children vertically */
   justify-content: center;
   align-items: center;
   margin: 60px auto;
@@ -132,4 +133,10 @@ h1 {
   object-fit: contain;
   opacity: 1;
   transition: opacity 1s ease-in-out;
+}
+
+#slideshow-caption {
+  font-style: normal !important;
+  text-align: center;
+  margin-top: 10px;
 }
