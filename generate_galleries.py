@@ -146,27 +146,35 @@ def generate_nav_html(manual_nav, gallery_tree):
         return html
 
     html = "<div class='navbar'>\n"
-
-    # CENTER MENU
     html += "  <ul class='menu'>\n"
-    for item in manual_nav:
-        html += f"    <li><a href='{item['url']}'>{item['title']}</a></li>\n"
 
-    # auto-generated galleries
+    # -------------------------------
+    # 1️⃣ First two manual items: Home, Recent
+    # -------------------------------
+    html += f"    <li><a href='{manual_nav[0]['url']}'>{manual_nav[0]['title']}</a></li>\n"
+    html += f"    <li><a href='{manual_nav[1]['url']}'>{manual_nav[1]['title']}</a></li>\n"
+
+    # -------------------------------
+    # 2️⃣ Auto-generated galleries
+    # -------------------------------
     for key, value in sorted(gallery_tree.items()):
         children = {k: v for k, v in value.items() if k != '_slug'}
         slug = value.get('_slug')
         if children:
-            html += f"<li class='dropdown'><a href='#'>{key.title()}</a>\n"
+            html += f"    <li class='dropdown'><a href='#'>{key.title()}</a>\n"
             html += recurse(children, level=1)
-            html += "</li>\n"
+            html += "    </li>\n"
         elif slug:
-            html += f"<li><a href='/photography/pages/{slug}.html'>{key.title()}</a></li>\n"
+            html += f"    <li><a href='/photography/pages/{slug}.html'>{key.title()}</a></li>\n"
+
+    # -------------------------------
+    # 3️⃣ Search always far right
+    # -------------------------------
+    html += f"    <li class='nav-right'><a href='{manual_nav[2]['url']}'>{manual_nav[2]['title']}</a></li>\n"
 
     html += "  </ul>\n"
     html += "</div>\n"
     return html
-
 
 nav_tree = build_nav_tree(galleries)
 nav_html = generate_nav_html(manual_nav, nav_tree)
