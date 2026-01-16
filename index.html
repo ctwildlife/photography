@@ -9,35 +9,7 @@
 <body>
 
   <!-- NAV (embedded directly) -->
-  <div class="navbar">
-    <ul class="menu">
-      <!-- 1️⃣ Home -->
-      <li><a href="/photography/index.html">Home</a></li>
-
-      <!-- 2️⃣ Recent -->
-      <li><a href="/photography/pages/recent.html">Recent</a></li>
-
-      <!-- 3️⃣ Auto-generated galleries -->
-      <!-- Example: replace with actual Python-generated list -->
-      <li class="dropdown">
-        <a href="#">Landscapes</a>
-        <ul class="dropdown-menu">
-          <li><a href="/photography/pages/landscapes-mountains.html">Mountains</a></li>
-          <li><a href="/photography/pages/landscapes-lakes.html">Lakes</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a href="#">Wildlife</a>
-        <ul class="dropdown-menu">
-          <li><a href="/photography/pages/wildlife-birds.html">Birds</a></li>
-          <li><a href="/photography/pages/wildlife-mammals.html">Mammals</a></li>
-        </ul>
-      </li>
-
-      <!-- 4️⃣ Search (far right) -->
-      <li class="nav-right"><a href="/photography/pages/search.html">Search</a></li>
-    </ul>
-  </div>
+  {{ nav_html }}
 
   <!-- SLIDESHOW -->
   <div class="slideshow-container">
