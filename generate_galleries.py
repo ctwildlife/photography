@@ -4,6 +4,7 @@ from datetime import datetime
 import subprocess
 import re
 import json
+from nav import manual_nav, build_nav_tree, generate_nav_html
 
 # =========================
 # Paths
@@ -16,15 +17,6 @@ includes_dir = os.path.join(workspace_root, "includes")
 
 os.makedirs(pages_base, exist_ok=True)
 os.makedirs(includes_dir, exist_ok=True)
-
-# =========================
-# Manual nav entries
-# =========================
-manual_nav = [
-    {"title": "Home", "url": "/photography/index.html"},
-    {"title": "Recent", "url": "/photography/pages/recent.html"},
-    {"title": "Search", "url": "/photography/pages/search.html"}
-]
 
 # =========================
 # Helper functions
@@ -117,67 +109,14 @@ for folder in gallery_folders:
         "images": images
     })
 
-def build_nav_tree(galleries):
-    tree = {}
-    for g in galleries:
-        node = tree
-        for part in g['path_parts']:
-            if part not in node:
-                node[part] = {}
-            node = node[part]
-        node['_slug'] = g['slug']
-    return tree
-
-def generate_nav_html(manual_nav, gallery_tree):
-    def recurse(tree, level=0):
-        html = "<ul class='dropdown-menu'>\n" if level > 0 else ""
-        for key, value in sorted(tree.items()):
-            if key == '_slug':
-                continue
-            children = {k: v for k, v in value.items() if k != '_slug'}
-            slug = value.get('_slug')
-            if children:
-                html += f"<li class='dropdown'><a href='#'>{key.title()}</a>\n"
-                html += recurse(children, level + 1)
-                html += "</li>\n"
-            elif slug:
-                html += f"<li><a href='/photography/pages/{slug}.html'>{key.title()}</a></li>\n"
-        html += "</ul>\n" if level > 0 else ""
-        return html
-
-    html = "<div class='navbar'>\n"
-    html += "  <ul class='menu'>\n"
-
-    # -------------------------------
-    # 1️⃣ First two manual items: Home, Recent
-    # -------------------------------
-    html += f"    <li><a href='{manual_nav[0]['url']}'>{manual_nav[0]['title']}</a></li>\n"
-    html += f"    <li><a href='{manual_nav[1]['url']}'>{manual_nav[1]['title']}</a></li>\n"
-
-    # -------------------------------
-    # 2️⃣ Auto-generated galleries
-    # -------------------------------
-    for key, value in sorted(gallery_tree.items()):
-        children = {k: v for k, v in value.items() if k != '_slug'}
-        slug = value.get('_slug')
-        if children:
-            html += f"    <li class='dropdown'><a href='#'>{key.title()}</a>\n"
-            html += recurse(children, level=1)
-            html += "    </li>\n"
-        elif slug:
-            html += f"    <li><a href='/photography/pages/{slug}.html'>{key.title()}</a></li>\n"
-
-    # -------------------------------
-    # 3️⃣ Search always far right
-    # -------------------------------
-    html += f"    <li class='nav-right'><a href='{manual_nav[2]['url']}'>{manual_nav[2]['title']}</a></li>\n"
-
-    html += "  </ul>\n"
-    html += "</div>\n"
-    return html
-
 nav_tree = build_nav_tree(galleries)
 nav_html = generate_nav_html(manual_nav, nav_tree)
+
+# Write nav HTML to includes/nav.html for static pages
+nav_include_path = os.path.join(includes_dir, "nav.html")
+with open(nav_include_path, "w", encoding="utf-8") as f:
+    f.write(nav_html)
+print(f"Updated includes/nav.html with latest nav")
 
 # =========================
 # Generate gallery pages
