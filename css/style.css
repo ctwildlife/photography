@@ -178,3 +178,10 @@ h1 {
   box-shadow: 0 2px 8px rgba(0,123,255,0.2);
   outline: none;
 }
+
+.search-instructions {
+  text-align: center;       /* center the text above the box */
+  margin-bottom: 0.5rem;    /* space between text and input */
+  font-size: 1rem;          /* readable size */
+  color: #555;              /* subtle gray color */
+}
