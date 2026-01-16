@@ -158,8 +158,10 @@ h1 {
 /* Center the search box and make it look nicer */
 .search-container {
   display: flex;
-  justify-content: center; /* centers horizontally */
-  margin: 2rem 0;          /* space above and below */
+  flex-direction: column;  /* stack children vertically */
+  justify-content: center; /* centers vertically (not really needed here) */
+  align-items: center;     /* centers horizontally */
+  margin: 2rem 0;
 }
 
 #searchBox {
