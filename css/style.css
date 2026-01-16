@@ -51,18 +51,14 @@ h1 {
 /* =========================
    NAVIGATION & DROPDOWN
    ========================= */
+/* =========================
+   NAVIGATION & DROPDOWN
+   ========================= */
+
 .navbar {
+  display: flex;
+  justify-content: center;   /* center the whole menu group */
   background-color: #111;
-  justify-content: center;
-}
-
-.navbar ul.menu {
-    display: flex;         /* Make top-level menu items flex items */
-    align-items: center;   
-}
-
-.navbar ul.menu li.nav-right {
-    margin-left: auto;     /* Push this item to the far right */
 }
 
 .menu {
@@ -70,7 +66,8 @@ h1 {
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: flex-start;
+  align-items: center;
+  gap: 1.5rem;               /* controls spacing between ALL items */
 }
 
 .menu > li {
@@ -103,22 +100,10 @@ h1 {
   z-index: 1000;
 }
 
-.dropdown-menu li {
-  width: 100%;
-}
-
 .dropdown-menu li a {
-  display: block;
   padding: 12px 16px;
-  color: white;
-  text-decoration: none;
 }
 
-.dropdown-menu li a:hover {
-  background-color: #555;
-}
-
-/* Show submenu on hover */
 .dropdown:hover .dropdown-menu,
 .dropdown:focus-within .dropdown-menu {
   display: block;

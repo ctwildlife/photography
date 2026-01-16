@@ -132,26 +132,29 @@ def generate_nav_html(manual_nav, gallery_tree):
     def recurse(tree, level=0):
         html = "<ul class='dropdown-menu'>\n" if level > 0 else ""
         for key, value in sorted(tree.items()):
-            if key == '_slug': continue
-            children = {k:v for k,v in value.items() if k != '_slug'}
+            if key == '_slug':
+                continue
+            children = {k: v for k, v in value.items() if k != '_slug'}
             slug = value.get('_slug')
             if children:
                 html += f"<li class='dropdown'><a href='#'>{key.title()}</a>\n"
-                html += recurse(children, level+1)
+                html += recurse(children, level + 1)
                 html += "</li>\n"
             elif slug:
                 html += f"<li><a href='/photography/pages/{slug}.html'>{key.title()}</a></li>\n"
         html += "</ul>\n" if level > 0 else ""
         return html
 
-    html = "<div class='navbar'>\n<ul class='menu'>\n"
-    for item in manual_nav:
-        # Add manual links first, but push "Search" to the far right
-        cls = " class='nav-right'" if item['title'] == "Search" else ""
-        html += f"  <li{cls}><a href='{item['url']}'>{item['title']}</a></li>\n"
+    html = "<div class='navbar'>\n"
 
+    # CENTER MENU
+    html += "  <ul class='menu'>\n"
+    for item in manual_nav:
+        html += f"    <li><a href='{item['url']}'>{item['title']}</a></li>\n"
+
+    # auto-generated galleries
     for key, value in sorted(gallery_tree.items()):
-        children = {k:v for k,v in value.items() if k != '_slug'}
+        children = {k: v for k, v in value.items() if k != '_slug'}
         slug = value.get('_slug')
         if children:
             html += f"<li class='dropdown'><a href='#'>{key.title()}</a>\n"
@@ -159,17 +162,14 @@ def generate_nav_html(manual_nav, gallery_tree):
             html += "</li>\n"
         elif slug:
             html += f"<li><a href='/photography/pages/{slug}.html'>{key.title()}</a></li>\n"
-    html += "</ul>\n</div>\n"
+
+    html += "  </ul>\n"
+    html += "</div>\n"
     return html
+
 
 nav_tree = build_nav_tree(galleries)
 nav_html = generate_nav_html(manual_nav, nav_tree)
-
-# Write nav include
-nav_include_path = os.path.join(includes_dir, "nav.html")
-with open(nav_include_path, "w", encoding="utf-8") as f:
-    f.write(nav_html)
-print(f"Nav written to {nav_include_path}")
 
 # =========================
 # Generate gallery pages
