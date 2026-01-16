@@ -56,6 +56,15 @@ h1 {
   justify-content: center;
 }
 
+.navbar ul.menu {
+    display: flex;         /* Make top-level menu items flex items */
+    align-items: center;   
+}
+
+.navbar ul.menu li.nav-right {
+    margin-left: auto;     /* Push this item to the far right */
+}
+
 .menu {
   list-style: none;
   margin: 0;
@@ -143,4 +152,29 @@ h1 {
   justify-content: center;
   align-items: center;
   margin: 60px auto;
+}
+
+/*SEARCH BOX THING */
+/* Center the search box and make it look nicer */
+.search-container {
+  display: flex;
+  justify-content: center; /* centers horizontally */
+  margin: 2rem 0;          /* space above and below */
+}
+
+#searchBox {
+  width: 50%;               /* half the page width */
+  max-width: 400px;         /* optional maximum width */
+  padding: 0.5rem 1rem;     /* inside spacing */
+  font-size: 1rem;          /* readable text */
+  border: 2px solid #ccc;   /* subtle border */
+  border-radius: 8px;       /* rounded corners */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* subtle shadow */
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#searchBox:focus {
+  border-color: #007BFF;    /* highlight when typing */
+  box-shadow: 0 2px 8px rgba(0,123,255,0.2);
+  outline: none;
 }

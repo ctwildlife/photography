@@ -146,7 +146,10 @@ def generate_nav_html(manual_nav, gallery_tree):
 
     html = "<div class='navbar'>\n<ul class='menu'>\n"
     for item in manual_nav:
-        html += f"  <li><a href='{item['url']}'>{item['title']}</a></li>\n"
+        # Add manual links first, but push "Search" to the far right
+        cls = " class='nav-right'" if item['title'] == "Search" else ""
+        html += f"  <li{cls}><a href='{item['url']}'>{item['title']}</a></li>\n"
+
     for key, value in sorted(gallery_tree.items()):
         children = {k:v for k,v in value.items() if k != '_slug'}
         slug = value.get('_slug')
