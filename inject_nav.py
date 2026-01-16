@@ -4,7 +4,7 @@ import os
 # Paths
 # =========================
 workspace_root = r"C:\Users\Colin Tiernan\Documents\GitHub\photography"
-pages_dir = os.path.join(workspace_root, "pages")  # for your Home page and other static pages
+pages_dir = workspace_root  # Now points to the root of your repo
 nav_include_path = os.path.join(workspace_root, "includes", "nav.html")
 
 # =========================
@@ -32,6 +32,10 @@ def inject_nav_into_index():
 
     # Inject the nav into the page by replacing the placeholder
     updated_page_content = page_content.replace("<!-- NAV -->", nav_html)
+
+    if updated_page_content == page_content:
+        print("No changes made to the file. The placeholder wasn't found.")
+        return
 
     # Save the updated content back to the page
     with open(page_path, "w", encoding="utf-8") as f:
