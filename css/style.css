@@ -51,9 +51,6 @@ h1 {
 /* =========================
    NAVIGATION & DROPDOWN
    ========================= */
-/* =========================
-   NAVIGATION & DROPDOWN
-   ========================= */
 
 .navbar {
   display: flex;
@@ -151,6 +148,7 @@ h1 {
 
 #searchBox {
   width: 50%;               /* half the page width */
+  font-family: Georgia, serif;
   max-width: 400px;         /* optional maximum width */
   padding: 0.5rem 1rem;     /* inside spacing */
   font-size: 1rem;          /* readable text */

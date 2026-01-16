@@ -200,7 +200,7 @@ search_html_lines = [
     "  <p style='max-width: 400px; margin: 0 auto 1rem;'>",
     "    Use this to filter photos. For instance, type &ldquo;Wyoming&rdquo; to see all pictures taken in Wyoming.",
     "  </p>",
-    "  <input type='text' id='searchBox' placeholder='Search photos...' style='display: block; margin: 0 auto;'>",
+    "  <input type='text' id='searchBox' placeholder='Search photos ...' style='display: block; margin: 0 auto;'>",
     "</div>",
     "<div id='searchResults' class='gallery'></div>",
     "<script>",
