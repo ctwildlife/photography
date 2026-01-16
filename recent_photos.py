@@ -137,7 +137,7 @@ html_lines = [
     "</head>",
     "<body>",
     nav_html,
-    "<h1>New photos</h1>",
+    "<h1>Recent photos</h1>",
     "<div class='gallery'>"
 ]
 
