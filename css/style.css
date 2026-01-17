@@ -37,6 +37,7 @@ h1 {
   max-width: 1000px;
   height: auto;
   display: block;
+  aspect-ratio: 3 / 2; /* adjust if your photos differ */
   margin-bottom: 6px;
 }
 

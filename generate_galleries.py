@@ -161,7 +161,8 @@ for g in galleries:
         })
 
         html_lines.append("  <figure class='photo-block'>")
-        html_lines.append(f"    <img src='{img_src}' alt='{alt_text}' class='wildlife-photo'>")
+        html_lines.append(
+        f"    <img src='{img_src}' alt='{alt_text}' class='wildlife-photo' loading='lazy'>")
         html_lines.append(f"    <figcaption class='caption'>{caption}</figcaption>")
         html_lines.append("  </figure>")
 
@@ -216,7 +217,7 @@ search_html_lines = [
     "        .sort((a, b) => new Date(b.date) - new Date(a.date));",
     "      resultsDiv.innerHTML = filtered.map(photo =>",
     "        `<figure class='photo-block'>` +",
-    "        `<img src='${photo.url}' alt='${photo.caption}' class='wildlife-photo'>` +",
+    "        `<img src='${photo.url}' alt='${photo.caption}' class='wildlife-photo' loading='lazy'>` +",
     "        `<figcaption class='caption'>${photo.caption}</figcaption>` +",
     "        `</figure>`",
     "      ).join('');",

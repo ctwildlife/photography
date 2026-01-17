@@ -56,7 +56,7 @@ fetch('/photography/photos_index.json')
         .sort((a, b) => new Date(b.date) - new Date(a.date));
       resultsDiv.innerHTML = filtered.map(photo =>
         `<figure class='photo-block'>` +
-        `<img src='${photo.url}' alt='${photo.caption}' class='wildlife-photo'>` +
+        `<img src='${photo.url}' alt='${photo.caption}' class='wildlife-photo' loading='lazy'>` +
         `<figcaption class='caption'>${photo.caption}</figcaption>` +
         `</figure>`
       ).join('');

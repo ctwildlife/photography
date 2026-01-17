@@ -143,7 +143,8 @@ html_lines = [
 
 for item in recent_photos_data:
     html_lines.append("  <figure class='photo-block'>")
-    html_lines.append(f"    <img src='{item['src']}' alt='{item['caption']}' class='wildlife-photo'>")
+    html_lines.append(
+        f"    <img src='{item['src']}' alt='{item['caption']}' class='wildlife-photo' loading='lazy'>")
     html_lines.append(f"    <figcaption class='caption'>{item['caption']}</figcaption>")
     html_lines.append("  </figure>")
 
