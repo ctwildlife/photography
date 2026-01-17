@@ -26,7 +26,7 @@ def build_nav_tree(galleries):
 def generate_nav_html(manual_nav, gallery_tree):
     def recurse(tree, level=0):
         html = "<ul class='dropdown-menu'>\n" if level > 0 else ""
-        for key, value in sorted(tree.items()):
+        for key, value in tree.items():
             if key == '_slug':
                 continue
             children = {k: v for k, v in value.items() if k != '_slug'}
@@ -46,7 +46,7 @@ def generate_nav_html(manual_nav, gallery_tree):
     html += f"    <li><a href='{manual_nav[0]['url']}'>{manual_nav[0]['title']}</a></li>\n"
     html += f"    <li><a href='{manual_nav[1]['url']}'>{manual_nav[1]['title']}</a></li>\n"
 
-    for key, value in sorted(gallery_tree.items()):
+    for key, value in gallery_tree.items():
         children = {k: v for k, v in value.items() if k != '_slug'}
         slug = value.get('_slug')
         if children:

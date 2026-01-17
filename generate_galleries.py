@@ -55,6 +55,17 @@ def get_images_in_folder(folder):
         if f.lower().endswith((".jpg", ".jpeg", ".png"))
     ]
 
+# -------------------------
+# Count all images in a folder including subfolders
+# -------------------------
+def count_images_recursive(folder):
+    return sum(
+        1
+        for root, dirs, files in os.walk(folder)
+        for f in files
+        if f.lower().endswith((".jpg", ".jpeg", ".png"))
+    )
+
 def get_exif_caption(image_path):
     try:
         result = subprocess.run(
@@ -91,24 +102,42 @@ def get_date_taken(image_path):
 # Build galleries & nav
 # =========================
 
+# =========================
+# Build galleries & nav
+# =========================
+
 gallery_folders = find_gallery_folders(photos_base)
 galleries = []
 
 for folder in gallery_folders:
     images = get_images_in_folder(folder)
-    if not images:
-        continue
+
     rel_path = os.path.relpath(folder, photos_base)
     path_parts = rel_path.split(os.sep)
+
     galleries.append({
         "folder": folder,
         "rel_path": rel_path,
         "path_parts": path_parts,
         "slug": "-".join(path_parts),
         "title": path_parts[-1].replace("-", " ").title(),
-        "images": images
+        "images": images,
+        "image_count": count_images_recursive(folder)  # cumulative count including subfolders
     })
 
+# -------------------------
+# Sort galleries by total images (descending)
+# -------------------------
+galleries.sort(key=lambda g: g["image_count"], reverse=True)
+
+# Debug print to verify
+print("Gallery order by total images:")
+for g in galleries:
+    print(f"{g['title']}: {g['image_count']}")
+
+# -------------------------
+# Build nav
+# -------------------------
 nav_tree = build_nav_tree(galleries)
 nav_html = generate_nav_html(manual_nav, nav_tree)
 
