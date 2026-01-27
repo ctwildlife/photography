@@ -70,29 +70,41 @@
     let index = 0;
 
     fetch("recent_photos.json")
-      .then(r => r.json())
-      .then(data => {
-        if (!data.length) return;
+  .then(r => r.json())
+  .then(data => {
+    if (!data.length) return;
 
-        images = data.map(d => d.src);
-        captions = data.map(d => d.caption);
+    images = data.map(d => d.src);
+    captions = data.map(d => d.caption);
 
-        slideshow.src = images[0];
-        slideshow.alt = captions[0];
+    slideshow.src = images[0];
+    slideshow.alt = captions[0];
 
-        const captionEl = document.createElement("div");
-        captionEl.id = "slideshow-caption";
-        captionEl.style.textAlign = "center";
-        captionEl.style.marginTop = "10px";
-        captionEl.style.fontStyle = "normal";
-        captionEl.innerHTML = captions[0];
-        slideshow.after(captionEl);
+    // --- ADD THIS FUNCTION BEFORE USING IT ---
+    function italicizeLatin(text) {
+      // Wraps Latin names in parentheses with <em>, leaves parentheses intact
+      return text.replace(/\(([A-Z][a-z]+ [a-z]+)\)/g, '(<em>$1</em>)');
+    }
+
+    const captionEl = document.createElement("div");
+    captionEl.id = "slideshow-caption";
+    captionEl.style.textAlign = "center";
+    captionEl.style.marginTop = "10px";
+    captionEl.style.fontStyle = "normal";
+
+    // --- CHANGE THIS LINE ---
+    // Old: captionEl.innerHTML = captions[0];
+    captionEl.innerHTML = italicizeLatin(captions[0]); // <-- Italicizes Latin names
+
+    slideshow.after(captionEl);
+
 
         setInterval(() => {
           index = (index + 1) % images.length;
           slideshow.src = images[index];
           slideshow.alt = captions[index];
-          captionEl.innerText = captions[index];
+          // Use innerHTML + italicizer for dynamic captions
+          captionEl.innerHTML = italicizeLatin(captions[index]);
         }, 5000);
       })
       .catch(err => console.error(err));
