@@ -1,13 +1,33 @@
 [
   {
-    "caption": "Yellow-breasted Chat. July 4, 2019. Snake River Canyon.",
-    "url": "/photography/photos_web/birds-songbirds/yellow-breasted-chat.jpg",
-    "date": "2019-07-04"
+    "caption": "American Avocet. May 4, 2019. Thunder Basin National Grassland.",
+    "url": "/photography/photos_web/birds-miscellaneous-birds/Avocet 1.jpg",
+    "date": "2019-05-04"
   },
   {
-    "caption": "South Hills. Aug. 3, 2019. Sawtooth National Forest.",
-    "url": "/photography/photos_web/arthropods/white-lined-sphinx-4.jpg",
-    "date": "2019-08-03"
+    "caption": "American Avocet. May 4, 2019. Thunder Basin National Grassland.",
+    "url": "/photography/photos_web/birds-miscellaneous-birds/Avocet 2.jpg",
+    "date": "2019-05-04"
+  },
+  {
+    "caption": "American Avocet. May 4, 2019. Thunder Basin National Grassland..",
+    "url": "/photography/photos_web/birds-miscellaneous-birds/Avocet 3.jpg",
+    "date": "2019-05-04"
+  },
+  {
+    "caption": "White-faced Ibis (<em>Plegadis chii</em>). Aug 2, 2018. Thunder Basin National Grassland, Wyoming.",
+    "url": "/photography/photos_web/birds-miscellaneous-birds/Glossby Ibises.jpg",
+    "date": "2018-08-02"
+  },
+  {
+    "caption": "Chestnut-collared Longspur (<em>Calcarius ornatus</em>). July 21, 2018. Converse County, Wyoming.",
+    "url": "/photography/photos_web/birds-miscellaneous-birds/Chestnut-collared Longspur.jpg",
+    "date": "2018-07-21"
+  },
+  {
+    "caption": "American Avocet (<em>Recurvirostra americana</em>). July 1, 2018. Thunder Basin National Grassland, Wyoming.",
+    "url": "/photography/photos_web/birds-miscellaneous-birds/Avocet in Flight.jpg",
+    "date": "2018-07-01"
   },
   {
     "caption": "Spruce Grouse (<em>Canachites canadensis</em>). July 16, 2021. Cabinet Mountains Wilderness, Montana.",
@@ -30,6 +50,11 @@
     "date": "2019-05-05"
   },
   {
+    "caption": "Yellow-breasted Chat. July 4, 2019. Snake River Canyon.",
+    "url": "/photography/photos_web/birds-songbirds-miscellaneous-songbirds/yellow-breasted-chat.jpg",
+    "date": "2019-07-04"
+  },
+  {
     "caption": "Spotted towhee",
     "url": "/photography/photos_web/birds-songbirds-sparrows/spotted-towhee.jpg",
     "date": "2022-04-09"
@@ -41,12 +66,17 @@
   },
   {
     "caption": "Snowy pines",
-    "url": "/photography/photos_web/landscapes/snowy-pines.jpg",
+    "url": "/photography/photos_web/landscapes-camera landscapes/snowy-pines.jpg",
     "date": "2022-04-17"
   },
   {
     "caption": "Prairie dog",
     "url": "/photography/photos_web/mammals-rodents/prairie-dog.jpg",
     "date": "2023-12-18"
+  },
+  {
+    "caption": "South Hills. Aug. 3, 2019. Sawtooth National Forest.",
+    "url": "/photography/photos_web/more wildlife-reptiles & amphibians/white-lined-sphinx-4.jpg",
+    "date": "2019-08-03"
   }
 ]
