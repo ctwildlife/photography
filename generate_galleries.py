@@ -102,10 +102,6 @@ def get_date_taken(image_path):
 # Build galleries & nav
 # =========================
 
-# =========================
-# Build galleries & nav
-# =========================
-
 gallery_folders = find_gallery_folders(photos_base)
 galleries = []
 
