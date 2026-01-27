@@ -116,7 +116,7 @@ for folder in gallery_folders:
         "rel_path": rel_path,
         "path_parts": path_parts,
         "slug": "-".join(path_parts),
-        "title": path_parts[-1].replace("-", " ").title(),
+        "title": path_parts[-1].replace("-", " ").capitalize(),
         "images": images,
         "image_count": count_images_recursive(folder)  # cumulative count including subfolders
     })
