@@ -16,7 +16,7 @@ nav_include_path = os.path.join(workspace_root, "includes", "nav.html")
 # =========================
 photos_base = "photos"
 web_base = "photos_web"
-output_file = "pages/recent.html"
+output_file = "pages/new.html"
 max_photos = 15
 
 # =========================
@@ -132,12 +132,12 @@ html_lines = [
     "<html lang='en'>",
     "<head>",
     "    <meta charset='utf-8'>",
-    "    <title>Recent photos</title>",
+    "    <title>Latest photos</title>",
     "    <link rel='stylesheet' href='/photography/css/style.css'>",
     "</head>",
     "<body>",
     nav_html,
-    "<h1>Recent photos</h1>",
+    "<h1>Latest photos</h1>",
     "<div class='gallery'>"
 ]
 

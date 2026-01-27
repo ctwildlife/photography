@@ -6,7 +6,7 @@
 
 manual_nav = [
     {"title": "Home", "url": "/photography/index.html"},
-    {"title": "Recent", "url": "/photography/pages/recent.html"},
+    {"title": "New", "url": "/photography/pages/new.html"},
     {"title": "Search", "url": "/photography/pages/search.html"}
 ]
 
