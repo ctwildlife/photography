@@ -33,14 +33,11 @@ h1 {
 
 /* Images */
 .wildlife-photo {
-  width: 90%;           /* your smaller size */
-  max-width: 1000px;
-  height: auto;
-  display: block;       /* needed for margin auto to work */
-  margin-left: auto;    /* centers horizontally */
-  margin-right: auto;   /* centers horizontally */
-  margin-bottom: 6px;
-  aspect-ratio: 3 / 2;  /* adjust if your photos differ */
+  width: 90%;           /* controls width on screen */
+  max-width: 1000px;    /* optional max width */
+  height: auto;          /* automatically adjusts height to keep original ratio */
+  display: block;
+  margin: 0 auto 6px auto; /* centers image & adds bottom margin */
 }
 
 /* Captions */
