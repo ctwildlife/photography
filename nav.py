@@ -9,7 +9,8 @@ manual_nav = [
     {"title": "New", "url": "/photography/pages/new.html"},
     {"title": "Search", "url": "/photography/pages/search.html"}
 ]
-
+# Desired top-level order for galleries
+TOP_LEVEL_ORDER = ["Birds", "Mammals", "Landscapes"]
 
 def build_nav_tree(galleries):
     tree = {}
@@ -19,7 +20,11 @@ def build_nav_tree(galleries):
             if part not in node:
                 node[part] = {}
             node = node[part]
-        node["_slug"] = g["slug"]
+
+        # Check if the gallery has any photos
+        if g["image_count"] > 0:
+            node["_slug"] = g["slug"]
+
     return tree
 
 
@@ -57,9 +62,11 @@ def generate_nav_html(manual_nav, gallery_tree):
     html = "<div class='navbar'>\n"
     html += "  <ul class='menu'>\n"
 
+    # Manual navigation links
     html += f"    <li><a href='{manual_nav[0]['url']}'>{manual_nav[0]['title']}</a></li>\n"
     html += f"    <li><a href='{manual_nav[1]['url']}'>{manual_nav[1]['title']}</a></li>\n"
 
+    # Galleries and their subfolders
     for key, value in gallery_tree.items():
         children = {k: v for k, v in value.items() if k != "_slug"}
         slug = value.get("_slug")
@@ -82,3 +89,4 @@ def generate_nav_html(manual_nav, gallery_tree):
     html += "  </ul>\n"
     html += "</div>\n"
     return html
+

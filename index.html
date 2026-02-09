@@ -37,20 +37,20 @@
 <li><a href='/photography/pages/birds-shorebirds.html'>Shorebirds</a></li>
 </ul>
     </li>
-    <li class='dropdown'><a href='#'>Flora</a>
+    <li class='dropdown'><a href='#'>More photos</a>
 <ul class='dropdown-menu'>
-<li><a href='/photography/pages/flora-wildflowers.html'>Wildflowers</a></li>
+<li class='dropdown'><a href='#'>Flora</a>
+<ul class='dropdown-menu'>
+<li><a href='/photography/pages/more photos-flora-wildflowers.html'>Wildflowers</a></li>
+</ul>
+</li>
+<li><a href='/photography/pages/more photos-insects & spiders.html'>Insects & spiders</a></li>
+<li><a href='/photography/pages/more photos-reptiles & amphibians.html'>Reptiles & amphibians</a></li>
 </ul>
     </li>
     <li class='dropdown'><a href='#'>Mammals</a>
 <ul class='dropdown-menu'>
 <li><a href='/photography/pages/mammals-rodents.html'>Rodents</a></li>
-</ul>
-    </li>
-    <li class='dropdown'><a href='#'>More photos</a>
-<ul class='dropdown-menu'>
-<li><a href='/photography/pages/more photos-insects & spiders.html'>Insects & spiders</a></li>
-<li><a href='/photography/pages/more photos-reptiles & amphibians.html'>Reptiles & amphibians</a></li>
 </ul>
     </li>
     <li class='nav-right'><a href='/photography/pages/search.html'>Search</a></li>
@@ -76,45 +76,44 @@
     let captions = [];
     let index = 0;
 
-    fetch("recent_photos.json")
-  .then(r => r.json())
-  .then(data => {
-    if (!data.length) return;
+  fetch("recent_photos.json")
+    .then(r => r.json())
+    .then(data => {
+      if (!data.length) return;
 
-    images = data.map(d => d.src);
-    captions = data.map(d => d.caption);
+      images = data.map(d => d.src);
+      captions = data.map(d => d.caption);
 
-    slideshow.src = images[0];
-    slideshow.alt = captions[0];
+      // --- PRELOAD ALL IMAGES ---
+      images.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
 
-    // --- ADD THIS FUNCTION BEFORE USING IT ---
-    function italicizeLatin(text) {
-      // Wraps Latin names in parentheses with <em>, leaves parentheses intact
-      return text.replace(/\(([A-Z][a-z]+ [a-z]+)\)/g, '(<em>$1</em>)');
-    }
+      slideshow.src = images[0];
+      slideshow.alt = captions[0];
 
-    const captionEl = document.createElement("div");
-    captionEl.id = "slideshow-caption";
-    captionEl.style.textAlign = "center";
-    captionEl.style.marginTop = "10px";
-    captionEl.style.fontStyle = "normal";
+      function italicizeLatin(text) {
+        return text.replace(/\(([A-Z][a-z]+ [a-z]+)\)/g, '(<em>$1</em>)');
+      }
 
-    // --- CHANGE THIS LINE ---
-    // Old: captionEl.innerHTML = captions[0];
-    captionEl.innerHTML = italicizeLatin(captions[0]); // <-- Italicizes Latin names
+      const captionEl = document.createElement("div");
+      captionEl.id = "slideshow-caption";
+      captionEl.style.textAlign = "center";
+      captionEl.style.marginTop = "10px";
+      captionEl.style.fontStyle = "normal";
+      captionEl.innerHTML = italicizeLatin(captions[0]);
 
-    slideshow.after(captionEl);
+      slideshow.after(captionEl);
 
-
-        setInterval(() => {
-          index = (index + 1) % images.length;
-          slideshow.src = images[index];
-          slideshow.alt = captions[index];
-          // Use innerHTML + italicizer for dynamic captions
-          captionEl.innerHTML = italicizeLatin(captions[index]);
-        }, 5000);
-      })
-      .catch(err => console.error(err));
+      setInterval(() => {
+        index = (index + 1) % images.length;
+        slideshow.src = images[index];
+        slideshow.alt = captions[index];
+        captionEl.innerHTML = italicizeLatin(captions[index]);
+      }, 5000);
+    })
+    .catch(err => console.error(err));
   </script>
 
 </body>

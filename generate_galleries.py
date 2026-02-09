@@ -9,9 +9,16 @@ from nav import manual_nav, build_nav_tree, generate_nav_html
 # =========================
 # Paths
 # =========================
-photos_base = "photos"
-web_base = "photos_web"
+# Workspace root (GitHub repo)
 workspace_root = r"C:\Users\Colin Tiernan\Documents\GitHub\photography"
+
+# Original photos (outside GitHub)
+photos_base = r"C:\Users\Colin Tiernan\Desktop\website-photos"
+
+# Resized images for web (inside GitHub repo)
+web_base = os.path.join(workspace_root, "photos_web")
+
+# Pages and includes
 pages_base = os.path.join(workspace_root, "pages")
 includes_dir = os.path.join(workspace_root, "includes")
 
@@ -43,10 +50,17 @@ def resize_for_web_once(original_path, web_path, max_size=(1920, 1920), target_m
 def find_gallery_folders(base_path):
     gallery_folders = []
     for root, dirs, files in os.walk(base_path):
+        # Check if the folder has any image files
         images = [f for f in files if f.lower().endswith((".jpg", ".jpeg", ".png"))]
+        
+        # If the folder has images, it's a valid gallery folder
         if images:
             gallery_folders.append(root)
+        # If the folder has no images but only subfolders, we skip it
+        elif dirs and not images:
+            continue
     return gallery_folders
+
 
 def get_images_in_folder(folder):
     return [
