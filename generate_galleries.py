@@ -16,7 +16,7 @@ workspace_root = r"C:\Users\Colin Tiernan\Documents\GitHub\photography"
 photos_base = r"C:\Users\Colin Tiernan\Desktop\website-photos"
 
 # Resized images for web (inside GitHub repo)
-web_base = "photos_web"
+web_base = r"C:\Users\Colin Tiernan\Documents\GitHub\photography\photos_web"
 
 # URL base for resized images (relative to site root)
 #web_url_base = "/photography/photos_web"
