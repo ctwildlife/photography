@@ -14,7 +14,7 @@ nav_include_path = os.path.join(workspace_root, "includes", "nav.html")
 # =========================
 # Config
 # =========================
-photos_base = "photos"
+photos_base = r"C:\Users\Colin Tiernan\Desktop\website-photos"
 web_base = "photos_web"
 output_file = "pages/new.html"
 max_photos = 15
