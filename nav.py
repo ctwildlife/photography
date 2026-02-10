@@ -6,9 +6,10 @@
 
 manual_nav = [
     {"title": "Home", "url": "/photography/index.html"},
-    {"title": "New", "url": "/photography/pages/new.html"},
-    {"title": "Search", "url": "/photography/pages/search.html"},
+    {"title": "Recent", "url": "/photography/pages/recent.html"},
+    {"title": "Search", "url": "/photography/pages/search.html"}
 ]
+
 
 def build_nav_tree(galleries):
     tree = {}
@@ -18,32 +19,23 @@ def build_nav_tree(galleries):
             if part not in node:
                 node[part] = {}
             node = node[part]
-
-        # Check if the gallery has any photos
-        if g["image_count"] > 0:
-            node["_slug"] = g["slug"]
-            node["_image_count"] = g["image_count"]
-
+        node["_slug"] = g["slug"]
     return tree
+
 
 def nav_label_from_key(key):
     label = key.replace("-", " ")
     return label[:1].upper() + label[1:]
 
+
 def generate_nav_html(manual_nav, gallery_tree):
-    def recurse(tree):
-        html = "<ul class='dropdown-menu'>\n"
+    def recurse(tree, level=0):
+        html = "<ul class='dropdown-menu'>\n" if level > 0 else ""
+        for key, value in tree.items():
+            if key == "_slug":
+                continue
 
-        # Only sort items where value is a dict
-        items_to_sort = [(k, v) for k, v in tree.items() if isinstance(v, dict) and not k.startswith("_")]
-
-        for key, value in sorted(
-            items_to_sort,
-            key=lambda item: item[1].get("_image_count", 0),
-            reverse=True,
-        ):
             children = {k: v for k, v in value.items() if k != "_slug"}
-
             slug = value.get("_slug")
 
             if children:
@@ -51,7 +43,7 @@ def generate_nav_html(manual_nav, gallery_tree):
                     f"<li class='dropdown'>"
                     f"<a href='#'>{nav_label_from_key(key)}</a>\n"
                 )
-                html += recurse(children)
+                html += recurse(children, level + 1)
                 html += "</li>\n"
             elif slug:
                 html += (
@@ -59,40 +51,33 @@ def generate_nav_html(manual_nav, gallery_tree):
                     f"{nav_label_from_key(key)}</a></li>\n"
                 )
 
-        html += "</ul>\n"
+        html += "</ul>\n" if level > 0 else ""
         return html
 
     html = "<div class='navbar'>\n"
     html += "  <ul class='menu'>\n"
 
-    for item in manual_nav:
-        title = item["title"]
+    html += f"    <li><a href='{manual_nav[0]['url']}'>{manual_nav[0]['title']}</a></li>\n"
+    html += f"    <li><a href='{manual_nav[1]['url']}'>{manual_nav[1]['title']}</a></li>\n"
 
-        # Simple link (Home, New, Search)
-        if "url" in item:
-            html += f"    <li><a href='{item['url']}'>{title}</a></li>\n"
-            continue
-
-        # Gallery-backed item
-        slug = item["slug"]
-        if slug not in gallery_tree:
-            continue
-
-        node = gallery_tree[slug]
-        children = {k: v for k, v in node.items() if k != "_slug"}
+    for key, value in gallery_tree.items():
+        children = {k: v for k, v in value.items() if k != "_slug"}
+        slug = value.get("_slug")
 
         if children:
             html += (
                 f"    <li class='dropdown'>"
-                f"<a href='#'>{title}</a>\n"
+                f"<a href='#'>{nav_label_from_key(key)}</a>\n"
             )
-            html += recurse(children)
+            html += recurse(children, level=1)
             html += "    </li>\n"
-        else:
+        elif slug:
             html += (
                 f"    <li><a href='/photography/pages/{slug}.html'>"
-                f"{title}</a></li>\n"
+                f"{nav_label_from_key(key)}</a></li>\n"
             )
+
+    html += f"    <li class='nav-right'><a href='{manual_nav[2]['url']}'>{manual_nav[2]['title']}</a></li>\n"
 
     html += "  </ul>\n"
     html += "</div>\n"
