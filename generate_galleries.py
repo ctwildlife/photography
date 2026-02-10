@@ -16,7 +16,7 @@ workspace_root = r"C:\Users\Colin Tiernan\Documents\GitHub\photography"
 photos_base = r"C:\Users\Colin Tiernan\Desktop\website-photos"
 
 # Resized images for web (inside GitHub repo)
-web_base = r"C:\Users\Colin Tiernan\Documents\GitHub\photography\photos_web"
+web_base = "photos_web"
 
 # URL base for resized images (relative to site root)
 #web_url_base = "/photography/photos_web"
@@ -191,7 +191,7 @@ for g in galleries:
         caption = get_exif_caption(orig_path) or os.path.splitext(img_file)[0].replace("-", " ").replace("_", " ").capitalize()
         caption = italicize_latin_names(caption)
         alt_text = caption.split(".")[0].strip()
-        img_src = f"/photography/photos_web/{g['slug']}/{img_file}"
+        img_src = f"/photography/{web_base}/{g['slug']}/{img_file}"
 
         date_taken = get_date_taken(orig_path)
         date_str = date_taken.isoformat() if date_taken else ""
