@@ -7,10 +7,6 @@
 manual_nav = [
     {"title": "Home", "url": "/photography/index.html"},
     {"title": "New", "url": "/photography/pages/new.html"},
-    {"title": "Birds", "slug": "birds"},
-    {"title": "Mammals", "slug": "mammals"},
-    {"title": "Landscapes", "slug": "landscapes"},
-    {"title": "More", "slug": "more"},
     {"title": "Search", "url": "/photography/pages/search.html"},
 ]
 
