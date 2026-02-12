@@ -1,40 +1,5 @@
 [
   {
-    "caption": "Snowy pines. April 17, 2022. Spokane County, Washington.",
-    "url": "/photography/photos_web/landscapes-camera-landscapes/snowy-pines.jpg",
-    "date": "2022-04-17"
-  },
-  {
-    "caption": "The moon hangs over Craters of the Moon National Monument on July 4, 2020 in Idaho.",
-    "url": "/photography/photos_web/landscapes-camera-landscapes/Moon over Craters of the Moon National Monument. July 4, 2020. Idaho..jpg",
-    "date": "2020-07-04"
-  },
-  {
-    "caption": "Tetons. Aug. 24, 2018. Grand Teton National Park, Wyoming.",
-    "url": "/photography/photos_web/landscapes-camera-landscapes/Tetons 3.jpg",
-    "date": "2018-08-24"
-  },
-  {
-    "caption": "Tetons. Aug. 24, 2018. Grand Teton National Park, Wyoming.",
-    "url": "/photography/photos_web/landscapes-camera-landscapes/Tetons 7.jpg",
-    "date": "2018-08-24"
-  },
-  {
-    "caption": "The Tetons. Aug. 24, 2018. Grand Teton National Park, Wyoming.",
-    "url": "/photography/photos_web/landscapes-camera-landscapes/Tetons_1.jpg",
-    "date": "2018-08-24"
-  },
-  {
-    "caption": "Pump jack. Aug. 2, 2018. Thunder Basin National Grassland, Wyoming.",
-    "url": "/photography/photos_web/landscapes-camera-landscapes/Thunder Basin National Grassland.jpg",
-    "date": "2018-08-02"
-  },
-  {
-    "caption": "Converse County, Wyoming. July 29, 2018.",
-    "url": "/photography/photos_web/landscapes-camera-landscapes/Converse County.jpg",
-    "date": "2018-07-29"
-  },
-  {
     "caption": "American White Pelicans. June 15, 2019. Hagerman National Wildlife Refuge.",
     "url": "/photography/photos_web/birds-everything-else/Pelican 1.jpg",
     "date": "2019-06-15"
@@ -85,31 +50,6 @@
     "date": "2018-05-10"
   },
   {
-    "caption": "Spotted Towhee. April 9, 2022. Spokane, Washington.",
-    "url": "/photography/photos_web/birds-songbirds-sparrows/spotted-towhee.jpg",
-    "date": "2022-04-09"
-  },
-  {
-    "caption": "Fox Sparrow. Aug. 3, 2019. South Hills, Idaho.",
-    "url": "/photography/photos_web/birds-songbirds-sparrows/Fox Sparrow 2.jpg",
-    "date": "2019-08-03"
-  },
-  {
-    "caption": "Spotted Towhee. Oct. 6, 2018. Converse County, Wyoming.",
-    "url": "/photography/photos_web/birds-songbirds-sparrows/Spotted Towhee.jpg",
-    "date": "2018-10-06"
-  },
-  {
-    "caption": "Wildflowers. Aug. 24, 2018. Grand Teton National Park, Wyoming.",
-    "url": "/photography/photos_web/more-flora-wildflowers/Tetons 4.jpg",
-    "date": "2018-08-24"
-  },
-  {
-    "caption": "Wildflowers. Aug. 24, 2018. Grand Teton National Park, Wyoming.",
-    "url": "/photography/photos_web/more-flora-wildflowers/Tetons 5.jpg",
-    "date": "2018-08-24"
-  },
-  {
     "caption": "Short-eared Owl (<em>Asio flammeus</em>). April 22, 2020. Twin Falls County, Idaho.",
     "url": "/photography/photos_web/birds-raptors/Short-eared Owl.jpg",
     "date": "2020-04-22"
@@ -123,6 +63,21 @@
     "caption": "Western Meadowlark. May 5, 2019. Converse County, Wyoming.",
     "url": "/photography/photos_web/birds-songbirds-icterids/western-meadowlark.jpg",
     "date": "2019-05-05"
+  },
+  {
+    "caption": "Spotted Towhee. April 9, 2022. Spokane, Washington.",
+    "url": "/photography/photos_web/birds-songbirds-sparrows/spotted-towhee.jpg",
+    "date": "2022-04-09"
+  },
+  {
+    "caption": "Fox Sparrow. Aug. 3, 2019. South Hills, Idaho.",
+    "url": "/photography/photos_web/birds-songbirds-sparrows/Fox Sparrow 2.jpg",
+    "date": "2019-08-03"
+  },
+  {
+    "caption": "Spotted Towhee. Oct. 6, 2018. Converse County, Wyoming.",
+    "url": "/photography/photos_web/birds-songbirds-sparrows/Spotted Towhee.jpg",
+    "date": "2018-10-06"
   },
   {
     "caption": "Varied Thrush. Sept. 10, 2023. Alpine Lakes Wilderness, Washington.",
@@ -140,9 +95,54 @@
     "date": "2019-08-03"
   },
   {
+    "caption": "Snowy pines. April 17, 2022. Spokane County, Washington.",
+    "url": "/photography/photos_web/landscapes-camera-landscapes/snowy-pines.jpg",
+    "date": "2022-04-17"
+  },
+  {
+    "caption": "The moon hangs over Craters of the Moon National Monument on July 4, 2020 in Idaho.",
+    "url": "/photography/photos_web/landscapes-camera-landscapes/Moon over Craters of the Moon National Monument. July 4, 2020. Idaho..jpg",
+    "date": "2020-07-04"
+  },
+  {
+    "caption": "Tetons. Aug. 24, 2018. Grand Teton National Park, Wyoming.",
+    "url": "/photography/photos_web/landscapes-camera-landscapes/Tetons 3.jpg",
+    "date": "2018-08-24"
+  },
+  {
+    "caption": "Tetons. Aug. 24, 2018. Grand Teton National Park, Wyoming.",
+    "url": "/photography/photos_web/landscapes-camera-landscapes/Tetons 7.jpg",
+    "date": "2018-08-24"
+  },
+  {
+    "caption": "The Tetons. Aug. 24, 2018. Grand Teton National Park, Wyoming.",
+    "url": "/photography/photos_web/landscapes-camera-landscapes/Tetons_1.jpg",
+    "date": "2018-08-24"
+  },
+  {
+    "caption": "Pump jack. Aug. 2, 2018. Thunder Basin National Grassland, Wyoming.",
+    "url": "/photography/photos_web/landscapes-camera-landscapes/Thunder Basin National Grassland.jpg",
+    "date": "2018-08-02"
+  },
+  {
+    "caption": "Converse County, Wyoming. July 29, 2018.",
+    "url": "/photography/photos_web/landscapes-camera-landscapes/Converse County.jpg",
+    "date": "2018-07-29"
+  },
+  {
     "caption": "Prairie Dog. Dec. 18, 2023. Pawnee National Grassland, Colorado.",
     "url": "/photography/photos_web/mammals-rodents/prairie-dog.jpg",
     "date": "2023-12-18"
+  },
+  {
+    "caption": "Wildflowers. Aug. 24, 2018. Grand Teton National Park, Wyoming.",
+    "url": "/photography/photos_web/more-flora-wildflowers/Tetons 4.jpg",
+    "date": "2018-08-24"
+  },
+  {
+    "caption": "Wildflowers. Aug. 24, 2018. Grand Teton National Park, Wyoming.",
+    "url": "/photography/photos_web/more-flora-wildflowers/Tetons 5.jpg",
+    "date": "2018-08-24"
   },
   {
     "caption": "Monarch. Aug. 17, 2011. Connecticut.",

@@ -119,6 +119,13 @@ def get_date_taken(image_path):
 # Build galleries & nav
 # =========================
 
+gallery_order = {
+    "Birds": 1,
+    "Mammals": 2,
+    "Landscapes": 3,
+    "More": 4,
+}
+
 gallery_folders = find_gallery_folders(photos_base)
 galleries = []
 
@@ -138,16 +145,16 @@ for folder in gallery_folders:
         "image_count": count_images_recursive(folder)  # cumulative count including subfolders
     })
 
-# -------------------------
-# Sort galleries by total images (descending)
-# -------------------------
-galleries.sort(key=lambda g: g["image_count"], reverse=True)
+# =========================
+# Sort galleries by custom order
+# =========================
+# First, let's sort galleries manually using the predefined `gallery_order` map.
+galleries.sort(key=lambda g: gallery_order.get(g['title'], 999))  # Default to 999 if not in custom order
 
 # Debug print to verify
-print("Gallery order by total images:")
+print("Gallery order by custom defined order:")
 for g in galleries:
     print(f"{g['title']}: {g['image_count']}")
-
 # -------------------------
 # Build nav
 # -------------------------
