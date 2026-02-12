@@ -69,6 +69,10 @@ def generate_nav_html(manual_nav, gallery_tree, gallery_order):
 
     # Now use the ordered keys for the navigation menu
     for key in ordered_keys:
+                # Skip 'Songbirds' and 'Flora' from the navigation
+        if key in ['Songbirds', 'Flora']:
+            continue  # Skip this folder from the menu
+
         value = gallery_tree[key]
         children = {k: v for k, v in value.items() if k != "_slug"}
         slug = value.get("_slug")

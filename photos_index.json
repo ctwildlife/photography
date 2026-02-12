@@ -1,30 +1,5 @@
 [
   {
-    "caption": "American White Pelicans. June 15, 2019. Hagerman National Wildlife Refuge.",
-    "url": "/photography/photos_web/birds-everything-else/Pelican 1.jpg",
-    "date": "2019-06-15"
-  },
-  {
-    "caption": "American Avocet. May 4, 2019. Thunder Basin National Grassland..",
-    "url": "/photography/photos_web/birds-everything-else/Avocet 3.jpg",
-    "date": "2019-05-04"
-  },
-  {
-    "caption": "White-faced Ibis. Aug. 2, 2018. Thunder Basin National Grassland, Wyoming.",
-    "url": "/photography/photos_web/birds-everything-else/54478688920_66dffaff2c_o.jpg",
-    "date": "2018-08-02"
-  },
-  {
-    "caption": "Chestnut-collared Longspur. July 21, 2018. Converse County, Wyoming.",
-    "url": "/photography/photos_web/birds-everything-else/Chestnut-collared Longspur.jpg",
-    "date": "2018-07-21"
-  },
-  {
-    "caption": "American Avocet. July 1, 2018. Thunder Basin National Grassland, Wyoming.",
-    "url": "/photography/photos_web/birds-everything-else/Avocet in Flight.jpg",
-    "date": "2018-07-01"
-  },
-  {
     "caption": "Sharp-tailed Grouse. May 10, 2018. Converse County, Wyoming.",
     "url": "/photography/photos_web/birds-grouse/46140187205_486faf7363_o.jpg",
     "date": "2026-01-24"
@@ -48,6 +23,26 @@
     "caption": "A sharp-tailed grouse tries to impress a female May 10, 2018, at a lek in Converse County, Wyoming.",
     "url": "/photography/photos_web/birds-grouse/54359463463_ef6ee02010_o.jpg",
     "date": "2018-05-10"
+  },
+  {
+    "caption": "American White Pelicans. June 15, 2019. Hagerman National Wildlife Refuge.",
+    "url": "/photography/photos_web/birds-hodgepodge/Pelican 1.jpg",
+    "date": "2019-06-15"
+  },
+  {
+    "caption": "American Avocet. May 4, 2019. Thunder Basin National Grassland..",
+    "url": "/photography/photos_web/birds-hodgepodge/Avocet 3.jpg",
+    "date": "2019-05-04"
+  },
+  {
+    "caption": "White-faced Ibis. Aug. 2, 2018. Thunder Basin National Grassland, Wyoming.",
+    "url": "/photography/photos_web/birds-hodgepodge/54478688920_66dffaff2c_o.jpg",
+    "date": "2018-08-02"
+  },
+  {
+    "caption": "American Avocet. July 1, 2018. Thunder Basin National Grassland, Wyoming.",
+    "url": "/photography/photos_web/birds-hodgepodge/Avocet in Flight.jpg",
+    "date": "2018-07-01"
   },
   {
     "caption": "Short-eared Owl (<em>Asio flammeus</em>). April 22, 2020. Twin Falls County, Idaho.",
@@ -88,6 +83,11 @@
     "caption": "Yellow-breasted Chat. July 4, 2019. Snake River Canyon.",
     "url": "/photography/photos_web/birds-songbirds-various-songbirds/yellow-breasted-chat.jpg",
     "date": "2019-07-04"
+  },
+  {
+    "caption": "Chestnut-collared Longspur. July 21, 2018. Converse County, Wyoming.",
+    "url": "/photography/photos_web/birds-songbirds-various-songbirds/Chestnut-collared Longspur.jpg",
+    "date": "2018-07-21"
   },
   {
     "caption": "House Wren. Aug. 3, 2019. South Hills, Idaho.",
