@@ -28,7 +28,7 @@ def nav_label_from_key(key):
     return label[:1].upper() + label[1:]
 
 
-def generate_nav_html(manual_nav, gallery_tree):
+def generate_nav_html(manual_nav, gallery_tree, gallery_order):
     def recurse(tree, level=0):
         html = "<ul class='dropdown-menu'>\n" if level > 0 else ""
         for key, value in tree.items():
@@ -60,7 +60,16 @@ def generate_nav_html(manual_nav, gallery_tree):
     html += f"    <li><a href='{manual_nav[0]['url']}'>{manual_nav[0]['title']}</a></li>\n"
     html += f"    <li><a href='{manual_nav[1]['url']}'>{manual_nav[1]['title']}</a></li>\n"
 
-    for key, value in gallery_tree.items():
+    # Sort the gallery keys explicitly using the gallery_order
+    ordered_keys = sorted(
+        gallery_tree.keys(),
+        key=lambda k: gallery_order.get(nav_label_from_key(k), 999)  # Default to 999 if not in gallery_order
+    )
+
+
+    # Now use the ordered keys for the navigation menu
+    for key in ordered_keys:
+        value = gallery_tree[key]
         children = {k: v for k, v in value.items() if k != "_slug"}
         slug = value.get("_slug")
 
@@ -78,7 +87,6 @@ def generate_nav_html(manual_nav, gallery_tree):
             )
 
     html += f"    <li class='nav-right'><a href='{manual_nav[2]['url']}'>{manual_nav[2]['title']}</a></li>\n"
-
     html += "  </ul>\n"
     html += "</div>\n"
     return html

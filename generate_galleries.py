@@ -159,7 +159,7 @@ for g in galleries:
 # Build nav
 # -------------------------
 nav_tree = build_nav_tree(galleries)
-nav_html = generate_nav_html(manual_nav, nav_tree)
+nav_html = generate_nav_html(manual_nav, nav_tree, gallery_order)
 
 # Write nav HTML to includes/nav.html for static pages
 nav_include_path = os.path.join(includes_dir, "nav.html")
