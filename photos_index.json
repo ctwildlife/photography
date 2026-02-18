@@ -45,6 +45,11 @@
     "date": "2018-07-01"
   },
   {
+    "caption": "Western Meadowlark. May 5, 2019. Converse County, Wyoming.",
+    "url": "/photography/photos_web/birds-icterids/western-meadowlark.jpg",
+    "date": "2019-05-05"
+  },
+  {
     "caption": "Short-eared Owl (<em>Asio flammeus</em>). April 22, 2020. Twin Falls County, Idaho.",
     "url": "/photography/photos_web/birds-raptors/Short-eared Owl.jpg",
     "date": "2020-04-22"
@@ -55,43 +60,38 @@
     "date": "2020-06-02"
   },
   {
-    "caption": "Western Meadowlark. May 5, 2019. Converse County, Wyoming.",
-    "url": "/photography/photos_web/birds-songbirds-icterids/western-meadowlark.jpg",
-    "date": "2019-05-05"
-  },
-  {
     "caption": "Spotted Towhee. April 9, 2022. Spokane, Washington.",
-    "url": "/photography/photos_web/birds-songbirds-sparrows/spotted-towhee.jpg",
+    "url": "/photography/photos_web/birds-sparrows/spotted-towhee.jpg",
     "date": "2022-04-09"
   },
   {
     "caption": "Fox Sparrow. Aug. 3, 2019. South Hills, Idaho.",
-    "url": "/photography/photos_web/birds-songbirds-sparrows/Fox Sparrow 2.jpg",
+    "url": "/photography/photos_web/birds-sparrows/Fox Sparrow 2.jpg",
     "date": "2019-08-03"
   },
   {
     "caption": "Spotted Towhee. Oct. 6, 2018. Converse County, Wyoming.",
-    "url": "/photography/photos_web/birds-songbirds-sparrows/Spotted Towhee.jpg",
+    "url": "/photography/photos_web/birds-sparrows/Spotted Towhee.jpg",
     "date": "2018-10-06"
   },
   {
     "caption": "Varied Thrush. Sept. 10, 2023. Alpine Lakes Wilderness, Washington.",
-    "url": "/photography/photos_web/birds-songbirds-thrushes/varied-thrush.JPG",
+    "url": "/photography/photos_web/birds-thrushes/varied-thrush.JPG",
     "date": "2023-09-10"
   },
   {
     "caption": "Yellow-breasted Chat. July 4, 2019. Snake River Canyon.",
-    "url": "/photography/photos_web/birds-songbirds-various-songbirds/yellow-breasted-chat.jpg",
+    "url": "/photography/photos_web/birds-various-songbirds/yellow-breasted-chat.jpg",
     "date": "2019-07-04"
   },
   {
     "caption": "Chestnut-collared Longspur. July 21, 2018. Converse County, Wyoming.",
-    "url": "/photography/photos_web/birds-songbirds-various-songbirds/Chestnut-collared Longspur.jpg",
+    "url": "/photography/photos_web/birds-various-songbirds/Chestnut-collared Longspur.jpg",
     "date": "2018-07-21"
   },
   {
     "caption": "House Wren. Aug. 3, 2019. South Hills, Idaho.",
-    "url": "/photography/photos_web/birds-songbirds-wrens/House Wren.JPG",
+    "url": "/photography/photos_web/birds-wrens/House Wren.JPG",
     "date": "2019-08-03"
   },
   {
@@ -135,16 +135,6 @@
     "date": "2023-12-18"
   },
   {
-    "caption": "Wildflowers. Aug. 24, 2018. Grand Teton National Park, Wyoming.",
-    "url": "/photography/photos_web/more-flora-wildflowers/Tetons 4.jpg",
-    "date": "2018-08-24"
-  },
-  {
-    "caption": "Wildflowers. Aug. 24, 2018. Grand Teton National Park, Wyoming.",
-    "url": "/photography/photos_web/more-flora-wildflowers/Tetons 5.jpg",
-    "date": "2018-08-24"
-  },
-  {
     "caption": "Monarch. Aug. 17, 2011. Connecticut.",
     "url": "/photography/photos_web/more-insects & spiders/Monarch.jpg",
     "date": "2011-08-17"
@@ -153,5 +143,15 @@
     "caption": "South Hills. Aug. 3, 2019. Sawtooth National Forest.",
     "url": "/photography/photos_web/more-reptiles & amphibians/white-lined-sphinx-4.jpg",
     "date": "2019-08-03"
+  },
+  {
+    "caption": "Wildflowers. Aug. 24, 2018. Grand Teton National Park, Wyoming.",
+    "url": "/photography/photos_web/more-wildflowers/Tetons 4.jpg",
+    "date": "2018-08-24"
+  },
+  {
+    "caption": "Wildflowers. Aug. 24, 2018. Grand Teton National Park, Wyoming.",
+    "url": "/photography/photos_web/more-wildflowers/Tetons 5.jpg",
+    "date": "2018-08-24"
   }
 ]
