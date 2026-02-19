@@ -187,3 +187,7 @@ h1 {
   padding: 20px;
   text-align: center;
 }
+
+.text-page h1 {
+  margin-top: 20px;
+}
