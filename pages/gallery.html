@@ -1,18 +1,19 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-    <title>{{ category|capitalize }} Gallery</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="/js-temp/load-nav.js" defer></script>
+<title>{{ category|capitalize }} Gallery</title>
+<link href="/css/style.css" rel="stylesheet"/>
+<script defer="" src="/js-temp/load-nav.js"></script>
 </head>
 <body>
-    <h1>{{ category|capitalize }} Gallery</h1>
-    <div class="gallery" id="gallery">
+<h1>{{ category|capitalize }} Gallery</h1>
+<div class="gallery" id="gallery">
         {% for image in images %}
             <div class="photo">
-                <img src="{{ image.path }}" alt="{{ image.caption }}">
-                <p>{{ image.caption }}</p>
-            </div>
+<img alt="{{ image.caption }}" src="{{ image.path }}"/>
+<p>{{ image.caption }}</p>
+</div>
         {% endfor %}
     </div>
 </body>
