@@ -191,3 +191,7 @@ h1 {
 .text-page h1 {
   margin: 20px 0 40px;
 }
+
+.text-page p {
+  margin-top: 10px;
+}
