@@ -1,9 +1,5 @@
 [
   {
-    "src": "/photography/photos_web/email.JPG",
-    "caption": "Email"
-  },
-  {
     "src": "/photography/photos_web/46140187205_486faf7363_o.jpg",
     "caption": "Sharp-tailed Grouse. May 10, 2018. Converse County, Wyoming."
   },
@@ -58,5 +54,9 @@
   {
     "src": "/photography/photos_web/Pelican 1.jpg",
     "caption": "American White Pelicans. June 15, 2019. Hagerman National Wildlife Refuge."
+  },
+  {
+    "src": "/photography/photos_web/western-meadowlark.jpg",
+    "caption": "Western Meadowlark. May 5, 2019. Converse County, Wyoming."
   }
 ]
