@@ -7,8 +7,8 @@ nav_file_path = "Includes/nav.html"  # Path to the navigation file
 
 # Define the static pages you want to add to the nav
 static_pages = [
-    {"name": "Flickr", "url": "/more-flickr.html"},
-    {"name": "Contact", "url": "/more-contact.html"}
+    {"name": "Flickr", "url": "/photography/pages/more-flickr.html"},
+    {"name": "Contact", "url": "/photography/pages/more-contact.html"}
 ]
 
 # Function to create the static pages HTML content
