@@ -177,3 +177,13 @@ h1 {
   font-size: 1rem;          /* readable size */
   color: #555;              /* subtle gray color */
 }
+
+
+/*Static pages - just text */
+/*  */
+.text-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
