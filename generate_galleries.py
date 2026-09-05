@@ -18,6 +18,8 @@ photos_base = r"C:\Users\Colin Tiernan\Desktop\website-photos"
 # Resized images for web (inside GitHub repo)
 web_base = "photos_web"
 
+showcase_photos = []
+
 # URL base for resized images (relative to site root)
 #web_url_base = "/photography/photos_web"
 
@@ -94,6 +96,22 @@ def get_exif_caption(image_path):
     except Exception as e:
         print(f"ExifTool error on {image_path}: {e}")
         return None
+
+def get_exif_keywords(image_path):
+    try:
+        result = subprocess.run(
+            ["exiftool", "-Keywords", "-s3", image_path],
+            capture_output=True, text=True
+        )
+        keywords_raw = result.stdout.strip()
+        if not keywords_raw:
+            return []
+
+        return [k.strip().lower() for k in keywords_raw.split(",")]
+
+    except Exception as e:
+        print(f"ExifTool keyword error on {image_path}: {e}")
+        return []
 
 def italicize_latin_names(caption):
     if not caption:
@@ -206,11 +224,18 @@ for g in galleries:
         date_taken = get_date_taken(orig_path)
         date_str = date_taken.isoformat() if date_taken else ""
 
-        all_photos.append({
+        keywords = get_exif_keywords(orig_path)
+
+        photo_data = {
             "caption": caption,
             "url": img_src,
             "date": date_str
-        })
+        }
+
+        all_photos.append(photo_data)
+
+        if "showcase" in keywords:
+            showcase_photos.append(photo_data)
 
         html_lines.append("  <figure class='photo-block'>")
         html_lines.append(
@@ -233,6 +258,12 @@ json_path = os.path.join(workspace_root, "photos_index.json")
 with open(json_path, "w", encoding="utf-8") as f:
     json.dump(all_photos, f, indent=2, ensure_ascii=False)
 print(f"Photo index JSON written to {json_path}")
+
+showcase_json_path = os.path.join(workspace_root, "showcase.json")
+with open(showcase_json_path, "w", encoding="utf-8") as f:
+    json.dump(showcase_photos, f, indent=2, ensure_ascii=False)
+
+print(f"Showcase JSON written to {showcase_json_path}")
 
 # =========================
 # Generate search page

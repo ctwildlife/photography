@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ct wildlife - Flickr Showcase</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="/photography/public/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/photography/public/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/photography/public/apple-touch-icon.png">
+</head>
+
+<body>
+
+  <!-- NAV_START -->
+  <div class="navbar">
+    <ul class="menu">
+      <li><a href="/photography/index.html">Home</a></li>
+      <li><a href="/photography/pages/new.html">New</a></li>
+      <li class="dropdown"><a href="#">Birds</a>
+        <ul class="dropdown-menu">
+          <li><a href="/photography/pages/birds-grouse.html">Grouse</a></li>
+          <li><a href="/photography/pages/birds-hodgepodge.html">Hodgepodge</a></li>
+          <li><a href="/photography/pages/birds-icterids.html">Icterids</a></li>
+          <li><a href="/photography/pages/birds-raptors.html">Raptors</a></li>
+          <li><a href="/photography/pages/birds-shorebirds.html">Shorebirds</a></li>
+          <li><a href="/photography/pages/birds-sparrows.html">Sparrows</a></li>
+          <li><a href="/photography/pages/birds-thrushes.html">Thrushes</a></li>
+          <li><a href="/photography/pages/birds-various-songbirds.html">Various songbirds</a></li>
+          <li><a href="/photography/pages/birds-wrens.html">Wrens</a></li>
+        </ul>
+      </li>
+      <li class="dropdown"><a href="#">Mammals</a>
+        <ul class="dropdown-menu">
+          <li><a href="/photography/pages/mammals-rodents.html">Rodents</a></li>
+        </ul>
+      </li>
+      <li class="dropdown"><a href="#">Landscapes</a>
+        <ul class="dropdown-menu">
+          <li><a href="/photography/pages/landscapes-camera-landscapes.html">Camera landscapes</a></li>
+        </ul>
+      </li>
+      <li class="dropdown"><a href="#">More</a>
+        <ul class="dropdown-menu">
+          <li><a href="/photography/pages/more-insects & spiders.html">Insects & spiders</a></li>
+          <li><a href="/photography/pages/more-reptiles & amphibians.html">Reptiles & amphibians</a></li>
+          <li><a href="/photography/pages/more-wildflowers.html">Wildflowers</a></li>
+          <li><a href="/photography/pages/more-contact.html">Contact</a></li>
+          <li><a href="/photography/pages/more-flickr.html">Flickr</a></li>
+        </ul>
+      </li>
+      <li class="nav-right"><a href="/photography/pages/search.html">Search</a></li>
+    </ul>
+  </div>
+  <!-- NAV_END -->
+
+  <!-- SLIDESHOW -->
+  <div class="slideshow-container">
+    <img id="slideshow" src="" alt="Recent wildlife photo" style="max-width:90%; max-height:70vh;">
+  </div>
+
+  <script>
+    const slideshow = document.getElementById("slideshow");
+    let images = [];
+    let captions = [];
+    let index = 0;
+
+    const FLICKR_API_KEY = "730340d81037e2fe050d60dccbb41c16";
+    const USER_ID = "160043453@N06";
+    const PHOTOSET_ID = "72177720318432668";
+
+    function italicizeLatin(text) {
+      return text.replace(/\(([A-Z][a-z]+ [a-z]+)\)/g, '(<em>$1</em>)');
+    }
+
+    fetch(`https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=${FLICKR_API_KEY}&photoset_id=${PHOTOSET_ID}&user_id=${USER_ID}&extras=url_m&format=json&nojsoncallback=1`)
+      .then(r => r.json())
+      .then(data => {
+        if (!data.photoset || !data.photoset.photo.length) return;
+
+        images = data.photoset.photo.map(p => p.url_m);
+        captions = data.photoset.photo.map(p => p.title || "");
+
+        // preload images
+        images.forEach(src => { const img = new Image(); img.src = src; });
+
+        slideshow.src = images[0];
+        slideshow.alt = captions[0];
+
+        const captionEl = document.createElement("div");
+        captionEl.id = "slideshow-caption";
+        captionEl.style.textAlign = "center";
+        captionEl.style.marginTop = "10px";
+        captionEl.style.fontStyle = "normal";
+        captionEl.innerHTML = italicizeLatin(captions[0]);
+
+        slideshow.after(captionEl);
+
+        setInterval(() => {
+          index = (index + 1) % images.length;
+          slideshow.src = images[index];
+          slideshow.alt = captions[index];
+          captionEl.innerHTML = italicizeLatin(captions[index]);
+        }, 5000);
+      })
+      .catch(err => console.error("Flickr slideshow error:", err));
+  </script>
+
+</body>
+</html>
