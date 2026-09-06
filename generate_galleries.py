@@ -35,8 +35,12 @@ os.makedirs(includes_dir, exist_ok=True)
 # =========================
 
 def resize_for_web_once(original_path, web_path, max_size=(1920, 1920), target_mb=1.0):
-    if os.path.exists(web_path) and os.path.getsize(web_path) <= target_mb * 1024 * 1024:
-        return
+    if os.path.exists(web_path):
+        original_mtime = os.path.getmtime(original_path)
+        web_mtime = os.path.getmtime(web_path)
+        web_size_ok = os.path.getsize(web_path) <= target_mb * 1024 * 1024
+        if web_mtime >= original_mtime and web_size_ok:
+            return
     os.makedirs(os.path.dirname(web_path), exist_ok=True)
     try:
         img = Image.open(original_path)
@@ -97,6 +101,36 @@ def get_exif_caption(image_path):
         print(f"ExifTool error on {image_path}: {e}")
         return None
 
+MONTHS = {
+    "jan": 1, "january": 1,
+    "feb": 2, "february": 2,
+    "mar": 3, "march": 3,
+    "apr": 4, "april": 4,
+    "may": 5,
+    "jun": 6, "june": 6,
+    "jul": 7, "july": 7,
+    "aug": 8, "august": 8,
+    "sep": 9, "sept": 9, "september": 9,
+    "oct": 10, "october": 10,
+    "nov": 11, "november": 11,
+    "dec": 12, "december": 12,
+}
+
+def get_date_from_caption(caption):
+    if not caption:
+        return None
+    match = re.search(r'([A-Za-z]+)\.?\s+(\d{1,2}),\s+(\d{4})', caption)
+    if not match:
+        return None
+    month_str, day_str, year_str = match.groups()
+    month = MONTHS.get(month_str.lower().rstrip("."))
+    if not month:
+        return None
+    try:
+        return date(int(year_str), month, int(day_str))
+    except ValueError:
+        return None
+
 def get_exif_keywords(image_path):
     try:
         result = subprocess.run(
@@ -119,19 +153,28 @@ def italicize_latin_names(caption):
     return re.sub(r"\(([^)]+)\)", r"(<em>\1</em>)", caption)
 
 def get_date_taken(image_path):
+    # Try the caption first — treated as the source of truth
+    caption = get_exif_caption(image_path)
+    caption_date = get_date_from_caption(caption)
+    if caption_date:
+        return caption_date
+
+    # Fallback: use EXIF DateTimeOriginal if caption has no usable date
     try:
         result = subprocess.run(
             ["exiftool", "-DateTimeOriginal", "-s3", image_path],
             capture_output=True, text=True
         )
         date_str = result.stdout.strip()
-        if not date_str:
-            return None
-        date_part = date_str.split(" ")[0]
-        return datetime.strptime(date_part, "%Y:%m:%d").date()
+        if date_str:
+            date_part = date_str.split(" ")[0]
+            exif_date = datetime.strptime(date_part, "%Y:%m:%d").date()
+            print(f"No caption date for {image_path}, used EXIF date instead: {exif_date}")
+            return exif_date
     except Exception as e:
         print(f"ExifTool error on {image_path}: {e}")
-        return None
+
+    return None
 
 # =========================
 # Build galleries & nav
@@ -199,7 +242,7 @@ for g in galleries:
         if not isinstance(d, (date, datetime)):
             print(f"MISSING/BAD DATE: {p} -> {d!r} ({type(d).__name__})")
 
-    images.sort(key=lambda p: get_date_taken(p) or "", reverse=True)
+    images.sort(key=lambda p: get_date_taken(p) or date.min, reverse=True)
 
     html_lines = [
         "<!DOCTYPE html>",

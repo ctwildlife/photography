@@ -44,6 +44,13 @@ def resize_for_web_once(original_path, web_path, max_size=(1920, 1920), target_m
 # EXIF functions
 # =========================
 def get_date_taken(image_path):
+    # Try the caption first — treated as the source of truth
+    caption_text = get_caption(image_path)
+    caption_date = get_date_from_caption(caption_text)
+    if caption_date:
+        return caption_date
+
+    # Fallback: use EXIF DateTimeOriginal if caption has no usable date
     try:
         result = subprocess.run(
             ["exiftool", "-DateTimeOriginal", "-s3", image_path],
@@ -51,11 +58,12 @@ def get_date_taken(image_path):
             text=True
         )
         date_str = result.stdout.strip()
-        if not date_str:
-            return None
-        return datetime.strptime(date_str.split(" ")[0], "%Y:%m:%d")
+        if date_str:
+            return datetime.strptime(date_str.split(" ")[0], "%Y:%m:%d")
     except Exception:
-        return None
+        pass
+
+    return None
 
 def get_caption(image_path):
     try:
@@ -71,8 +79,37 @@ def get_caption(image_path):
             return os.path.splitext(os.path.basename(image_path))[0].replace("-", " ").capitalize()
     except Exception:
         return os.path.basename(image_path)
-    
 
+MONTHS = {
+    "jan": 1, "january": 1,
+    "feb": 2, "february": 2,
+    "mar": 3, "march": 3,
+    "apr": 4, "april": 4,
+    "may": 5,
+    "jun": 6, "june": 6,
+    "jul": 7, "july": 7,
+    "aug": 8, "august": 8,
+    "sep": 9, "sept": 9, "september": 9,
+    "oct": 10, "october": 10,
+    "nov": 11, "november": 11,
+    "dec": 12, "december": 12,
+}
+
+def get_date_from_caption(caption):
+    if not caption:
+        return None
+    match = re.search(r'([A-Za-z]+)\.?\s+(\d{1,2}),\s+(\d{4})', caption)
+    if not match:
+        return None
+    month_str, day_str, year_str = match.groups()
+    month = MONTHS.get(month_str.lower().rstrip("."))
+    if not month:
+        return None
+    try:
+        return datetime(int(year_str), month, int(day_str))
+    except ValueError:
+        return None
+    
 def italicize_latin_names(caption):
     """
     Wrap the first parenthetical (Latin name) in <em> tags.

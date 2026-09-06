@@ -33,11 +33,13 @@ h1 {
 
 /* Images */
 .wildlife-photo {
-  width: 90%;           /* controls width on screen */
-  max-width: 1000px;    /* optional max width */
-  height: auto;          /* automatically adjusts height to keep original ratio */
+  width: auto;
+  height: auto;
+  max-width: 90%;
+  max-height: 85vh;
+  object-fit: contain;
   display: block;
-  margin: 0 auto 6px auto; /* centers image & adds bottom margin */
+  margin: 0 auto 6px auto;
 }
 
 /* Captions */
