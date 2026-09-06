@@ -1,6 +1,6 @@
 import os
 from PIL import Image
-from datetime import datetime
+from datetime import datetime, date
 import subprocess
 import re
 import json
@@ -193,6 +193,12 @@ all_photos = []
 
 for g in galleries:
     images = g["images"]
+
+    for p in images:
+        d = get_date_taken(p)
+        if not isinstance(d, (date, datetime)):
+            print(f"MISSING/BAD DATE: {p} -> {d!r} ({type(d).__name__})")
+
     images.sort(key=lambda p: get_date_taken(p) or "", reverse=True)
 
     html_lines = [
