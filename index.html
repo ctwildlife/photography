@@ -81,7 +81,7 @@
 
 // once I'm set up for it, I can paste in this instead below - fetch("/photography/showcase.json")
 
-  fetch("recent_photos.json")
+  fetch("album.json")
     .then(r => r.json())
     .then(data => {
       if (!data.length) return;
