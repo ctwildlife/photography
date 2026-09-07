@@ -15,7 +15,7 @@ nav_include_path = os.path.join(workspace_root, "includes", "nav.html")
 # Config
 # =========================
 photos_base = r"C:\Users\Colin Tiernan\Desktop\website-photos"
-web_base = "photos_web"
+web_base = "photos_web/new"
 output_file = "pages/new.html"
 max_photos = 15
 
@@ -123,9 +123,12 @@ def italicize_latin_names(caption):
 # =========================
 # Gather all images
 # =========================
-def get_all_images(base_path):
+def get_all_images(base_path, exclude_dirs=None):
+    exclude_dirs = exclude_dirs or set()
     images = []
     for root, dirs, files in os.walk(base_path):
+        # Skip excluded folders (and their subfolders) entirely
+        dirs[:] = [d for d in dirs if d.lower() not in exclude_dirs]
         for f in files:
             if f.lower().endswith((".jpg", ".jpeg", ".png")):
                 images.append(os.path.join(root, f))
@@ -134,7 +137,7 @@ def get_all_images(base_path):
 # =========================
 # Main
 # =========================
-all_images = get_all_images(photos_base)
+all_images = get_all_images(photos_base, exclude_dirs={"cellphone"})
 all_images.sort(key=lambda p: get_date_taken(p) or datetime.min, reverse=True)
 recent_images = all_images[:max_photos]
 
@@ -150,6 +153,17 @@ for img_path in recent_images:
         "src": f"/photography/{web_base}/{img_file}",
         "caption": caption
     })
+
+# =========================
+# Clean up old "recent" photos no longer in the current top N
+# =========================
+current_filenames = {os.path.basename(p) for p in recent_images}
+if os.path.exists(web_base):
+    for existing_file in os.listdir(web_base):
+        if existing_file not in current_filenames:
+            file_path = os.path.join(web_base, existing_file)
+            os.remove(file_path)
+            print(f"Removed outdated recent photo: {file_path}")
 
 # =========================
 # Load shared nav
