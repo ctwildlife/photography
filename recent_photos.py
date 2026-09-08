@@ -137,7 +137,7 @@ def get_all_images(base_path, exclude_dirs=None):
 # =========================
 # Main
 # =========================
-all_images = get_all_images(photos_base, exclude_dirs={"cellphone"})
+all_images = get_all_images(photos_base, exclude_dirs={"cellphone-landscapes"})
 all_images.sort(key=lambda p: get_date_taken(p) or datetime.min, reverse=True)
 recent_images = all_images[:max_photos]
 
