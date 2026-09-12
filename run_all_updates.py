@@ -4,7 +4,7 @@ import subprocess
 scripts = [
     "generate_galleries.py",
     "recent_photos.py",
-    "inject_static.py",
+    #"inject_static.py",
     "remove_amps.py",
     "inject_nav.py"
 ]
