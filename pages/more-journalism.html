@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang='en'>
+
+<html lang="en">
 <head>
-    <meta charset='UTF-8'>
-    <title>Search</title>
-    <link rel='stylesheet' href='/photography/css/style.css'>
+<title>Journalism</title>
+<link href="/photography/css/style.css" rel="stylesheet"/>
+<link href="/photography/public/favicon.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/photography/public/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/photography/public/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 </head>
 <body>
+<!-- NAV_START -->
 <div class='navbar'>
   <ul class='menu'>
     <li><a href='/photography/index.html'>Home</a></li>
@@ -53,7 +57,6 @@
 <li><a href='/photography/pages/more-portraits.html'>Portraits</a></li>
 <li><a href='/photography/pages/more-birds-in-flight.html'>Birds in flight</a></li>
 <li><a href='/photography/pages/more-flickr.html'>Flickr</a></li>
-<li><a href='/photography/pages/more-journalism.html'>Journalism</a></li>
 <li><a href='/photography/pages/more-contact.html'>Contact</a></li>
 </ul>
     </li>
@@ -61,33 +64,10 @@
   </ul>
 </div>
 
-<h1>Search</h1>
-<div class='search-container' style='text-align: center;'>
-  <p style='max-width: 400px; margin: 0 auto 1rem;'>
-    Use this to filter photos. For instance, type &ldquo;Wyoming&rdquo; to see all pictures taken in Wyoming.
-  </p>
-  <input type='text' id='searchBox' placeholder='Search photos ...' style='display: block; margin: 0 auto;'>
-</div>
-<div id='searchResults' class='gallery'></div>
-<script>
-fetch('/photography/photos_index.json')
-  .then(res => res.json())
-  .then(allPhotos => {
-    const searchBox = document.getElementById('searchBox');
-    const resultsDiv = document.getElementById('searchResults');
-    searchBox.addEventListener('input', () => {
-      const query = searchBox.value.toLowerCase();
-      const filtered = allPhotos
-        .filter(photo => photo.caption.toLowerCase().includes(query))
-        .sort((a, b) => new Date(b.date) - new Date(a.date));
-      resultsDiv.innerHTML = filtered.map(photo =>
-        `<figure class='photo-block'>` +
-        `<img src='${photo.url}' alt='${photo.caption}' class='wildlife-photo' loading='lazy'>` +
-        `<figcaption class='caption'>${photo.caption}</figcaption>` +
-        `</figure>`
-      ).join('');
-    });
-  });
-</script>
+<!-- NAV_END -->
+<main class="text-page">
+<h1>Journalism</h1>
+<p>My journalism portfolio is <a href="https://ctiernan7.wixsite.com/work" target="_blank">here</a>.</p>
+</main>
 </body>
 </html>

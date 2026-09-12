@@ -305,6 +305,7 @@ with open(json_path, "w", encoding="utf-8") as f:
 print(f"Photo index JSON written to {json_path}")
 
 showcase_json_path = os.path.join(workspace_root, "showcase.json")
+showcase_sorted = sorted(showcase_photos, key=lambda p: p["date"] or date.min, reverse=True)
 with open(showcase_json_path, "w", encoding="utf-8") as f:
     json.dump([
         {
@@ -312,7 +313,7 @@ with open(showcase_json_path, "w", encoding="utf-8") as f:
             "url": p["img_src"],
             "date": p["date"].isoformat() if p["date"] else ""
         }
-        for p in showcase_photos
+        for p in showcase_sorted
     ], f, indent=2, ensure_ascii=False)
 print(f"Showcase JSON written to {showcase_json_path}")
 

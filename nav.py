@@ -8,9 +8,9 @@ manual_nav = [
 
 manual_more_links = [
     {"title": "Flickr", "url": "/photography/pages/more-flickr.html"},
+    {"title": "Journalism", "url": "/photography/pages/more-journalism.html"},
     {"title": "Contact", "url": "/photography/pages/more-contact.html"},
 ]
-
 
 def build_nav_tree(galleries):
     tree = {}

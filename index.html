@@ -58,6 +58,7 @@
 <li><a href='/photography/pages/more-portraits.html'>Portraits</a></li>
 <li><a href='/photography/pages/more-birds-in-flight.html'>Birds in flight</a></li>
 <li><a href='/photography/pages/more-flickr.html'>Flickr</a></li>
+<li><a href='/photography/pages/more-journalism.html'>Journalism</a></li>
 <li><a href='/photography/pages/more-contact.html'>Contact</a></li>
 </ul>
     </li>
@@ -78,21 +79,26 @@
   </div>
 
   <!-- SLIDESHOW SCRIPT -->
-  <script>
-    const slideshow = document.getElementById("slideshow");
-    let images = [];
-    let captions = [];
-    let index = 0;
+<script>
+  const slideshow = document.getElementById("slideshow");
+  let images = [];
+  let captions = [];
+  let index = 0;
 
-// once I'm set up for it, I can paste in this instead below - fetch("/photography/showcase.json")
-
-  fetch("recent_photos.json")
+  fetch("/photography/showcase.json")
     .then(r => r.json())
     .then(data => {
       if (!data.length) return;
 
-      images = data.map(d => d.src);
+      images = data.map(d => d.url);
       captions = data.map(d => d.caption);
+
+      // --- SHUFFLE (keeps images/captions paired) ---
+      for (let i = images.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [images[i], images[j]] = [images[j], images[i]];
+        [captions[i], captions[j]] = [captions[j], captions[i]];
+      }
 
       // --- PRELOAD ALL IMAGES ---
       images.forEach(src => {
@@ -124,7 +130,7 @@
       }, 5000);
     })
     .catch(err => console.error(err));
-  </script>
+</script>
 
 </body>
 </html>
