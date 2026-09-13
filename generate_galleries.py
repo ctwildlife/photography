@@ -23,8 +23,8 @@ birds_in_flight_photos = []
 
 KEYWORD_GALLERIES = [
     {"match": ["showcase"],              "photos": showcase_photos,        "title": "Showcase",         "filename": "more-showcase.html"},
+    {"match": ["faves"],                 "photos": fave_photos,            "title": "Faves", "nav_title": "Favorites", "filename": "more-faves.html", "shuffle": True},
     {"match": ["silhouette"],            "photos": silhouette_photos,      "title": "Silhouettes",      "filename": "more-silhouettes.html"},
-    {"match": ["faves"],                 "photos": fave_photos,            "title": "Faves", "nav_title": "Favorites", "filename": "more-faves.html"},
     {"match": ["portrait", "portraits"], "photos": portrait_photos,        "title": "Portraits",        "filename": "more-portraits.html"},
     {"match": ["birds in flight", "bif"],"photos": birds_in_flight_photos, "title": "Birds in flight",  "filename": "more-birds-in-flight.html"},
 ]
@@ -321,8 +321,10 @@ print(f"Showcase JSON written to {showcase_json_path}")
 # Keyword-filtered gallery pages
 # =========================
 
-def write_keyword_gallery(title, photos, out_filename):
+def write_keyword_gallery(title, photos, out_filename, shuffle=False):
     photos = sorted(photos, key=lambda p: p["date"] or date.min, reverse=True)
+
+    gallery_class = "gallery shuffle-gallery" if shuffle else "gallery"
 
     lines = [
         "<!DOCTYPE html>",
@@ -337,7 +339,7 @@ def write_keyword_gallery(title, photos, out_filename):
         "<body>",
         nav_html,
         f"<h1>{title}</h1>",
-        "<div class='gallery'>"
+        f"<div class='{gallery_class}'>"
     ]
 
     for item in photos:
@@ -347,7 +349,25 @@ def write_keyword_gallery(title, photos, out_filename):
         lines.append(f"    <figcaption class='caption'>{item['caption']}</figcaption>")
         lines.append("  </figure>")
 
-    lines.append("</div></body></html>")
+    lines.append("</div>")
+
+    if shuffle:
+        lines.append("""
+<script>
+(function() {
+  const gallery = document.querySelector('.shuffle-gallery');
+  if (!gallery) return;
+  const items = Array.from(gallery.children);
+  for (let i = items.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [items[i], items[j]] = [items[j], items[i]];
+  }
+  items.forEach(item => gallery.appendChild(item));
+})();
+</script>
+""")
+
+    lines.append("</body></html>")
 
     out_path = os.path.join(pages_base, out_filename)
     with open(out_path, "w", encoding="utf-8") as f:
@@ -356,7 +376,7 @@ def write_keyword_gallery(title, photos, out_filename):
 
 
 for gallery in KEYWORD_GALLERIES:
-    write_keyword_gallery(gallery["title"], gallery["photos"], gallery["filename"])
+    write_keyword_gallery(gallery["title"], gallery["photos"], gallery["filename"], gallery.get("shuffle", False))
 
 # =========================
 # Generate search page

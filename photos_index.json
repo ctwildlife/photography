@@ -26,11 +26,6 @@
   },
   {
     "caption": "Spruce Grouse. Oct. 7, 2022. Glacier National Park, Montana.",
-    "url": "/photography/photos_web/birds-grouse/spruce-grouse-canachites-canadensis_53575576384_o.jpg",
-    "date": "2022-10-07"
-  },
-  {
-    "caption": "Spruce Grouse. Oct. 7, 2022. Glacier National Park, Montana.",
     "url": "/photography/photos_web/birds-grouse/spruce-grouse-canachites-canadensis_55202868862_o.jpg",
     "date": "2022-10-07"
   },
@@ -223,11 +218,6 @@
     "caption": "Double-crested Cormorant. Sept. 18, 2022. Riverside State Park, Washington.",
     "url": "/photography/photos_web/birds-hodgepodge/double-crested-cormorant-nannopterum-auritum_53826153905_o.jpg",
     "date": "2022-09-18"
-  },
-  {
-    "caption": "Pied-billed Grebe. June 4, 2022. Columbia Plateau Trail State Park, Washington.",
-    "url": "/photography/photos_web/birds-hodgepodge/pied-billed-grebe-podilymbus-podiceps_54623665601_o.jpg",
-    "date": "2022-06-04"
   },
   {
     "caption": "Wild Turkeys. July 3, 2021. Kaniksu National Forest, Idaho.",
@@ -440,7 +430,7 @@
     "date": "2020-05-02"
   },
   {
-    "caption": "Short-eared Owl (<em>new</em>). April 22, 2020. Twin Falls County, Idaho.",
+    "caption": "Short-eared Owl. April 22, 2020. Twin Falls County, Idaho.",
     "url": "/photography/photos_web/birds-raptors/short-eared-owl-asio-flammeus_50830073651_o.jpg",
     "date": "2020-04-22"
   },
@@ -685,11 +675,6 @@
     "date": "2022-05-30"
   },
   {
-    "caption": "Spotted Towhee. April 9, 2022. Spokane, Washington.",
-    "url": "/photography/photos_web/birds-sparrows/spotted-towhee.jpg",
-    "date": "2022-04-09"
-  },
-  {
     "caption": "White-throated Sparrow. Dec. 23, 2021. Connecticut.",
     "url": "/photography/photos_web/birds-sparrows/white-throated-sparrow-zonotrichia-albicollis_51790672891_o.jpg",
     "date": "2021-12-23"
@@ -728,11 +713,6 @@
     "caption": "Spotted Towhee. July 27, 2019. Craters of the Moon National Monument, Idaho.",
     "url": "/photography/photos_web/birds-sparrows/spotted-towhee-pipilo-maculatus_48570600192_o.jpg",
     "date": "2019-07-27"
-  },
-  {
-    "caption": "Lazuli Bunting. July 4, 2019. Snake River Canyon, Idaho.",
-    "url": "/photography/photos_web/birds-sparrows/lazuli-bunting-passerina-amoena_48348260642_o.jpg",
-    "date": "2019-07-04"
   },
   {
     "caption": "Green-tailed Towhee. June 29, 2019. South Hills, Idaho.",
@@ -810,7 +790,7 @@
     "date": "2024-05-04"
   },
   {
-    "caption": "Curve-billed Thrasher. Dec. 17, 2023. Sante Fe, New Mexico.",
+    "caption": "Curve-billed Thrasher. Dec. 17, 2023. Santa Fe, New Mexico.",
     "url": "/photography/photos_web/birds-various-songbirds/curve-billed-thrasher-toxostoma-curvirostre_53595257798_o.jpg",
     "date": "2023-12-17"
   },
@@ -953,6 +933,11 @@
     "caption": "Cassia Crossbill. Aug. 3, 2019. South Hills, Idaho.",
     "url": "/photography/photos_web/birds-various-songbirds/cassia-crossbill_54479926649_o.jpg",
     "date": "2019-08-03"
+  },
+  {
+    "caption": "Lazuli Bunting. July 4, 2019. Snake River Canyon, Idaho.",
+    "url": "/photography/photos_web/birds-various-songbirds/lazuli-bunting-passerina-amoena_48348260642_o.jpg",
+    "date": "2019-07-04"
   },
   {
     "caption": "Yellow-breasted Chat. July 4, 2019. Snake River Canyon, Idaho.",
