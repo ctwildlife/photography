@@ -11,7 +11,8 @@ nav_include_path = os.path.join(workspace_root, "includes", "nav.html")
 pages_to_inject = [
     "index.html",  # root of repo
     os.path.join("pages", "more-contact.html"),  # pages folder
-    os.path.join("pages", "more-flickr.html")
+    os.path.join("pages", "more-flickr.html"),
+    os.path.join("pages", "more-journalism.html")
 ]
 
 # =========================

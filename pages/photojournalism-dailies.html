@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/photography/css/style.css">
+<link rel="icon" type="image/png" sizes="32x32" href="/photography/public/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/photography/public/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/photography/public/apple-touch-icon.png">
+<title>Dailies | Photojournalism</title>
+</head>
+<body class="pjg-page">
+<div class='navbar'>
+  <ul class='menu'>
+    <li><a href='/photography/index.html'>Home</a></li>
+    <li><a href='/photography/pages/new.html'>New</a></li>
+    <li class='dropdown'><a href='#'>Birds</a>
+<ul class='dropdown-menu'>
+<li><a href='/photography/pages/birds-flycatchers.html'>Flycatchers</a></li>
+<li><a href='/photography/pages/birds-grouse.html'>Grouse</a></li>
+<li><a href='/photography/pages/birds-hodgepodge.html'>Hodgepodge</a></li>
+<li><a href='/photography/pages/birds-hummingbirds.html'>Hummingbirds</a></li>
+<li><a href='/photography/pages/birds-icterids.html'>Icterids</a></li>
+<li><a href='/photography/pages/birds-raptors.html'>Raptors</a></li>
+<li><a href='/photography/pages/birds-shorebirds.html'>Shorebirds</a></li>
+<li><a href='/photography/pages/birds-snow geese.html'>Snow geese</a></li>
+<li><a href='/photography/pages/birds-sparrows.html'>Sparrows</a></li>
+<li><a href='/photography/pages/birds-thrushes.html'>Thrushes</a></li>
+<li><a href='/photography/pages/birds-various-songbirds.html'>Various songbirds</a></li>
+<li><a href='/photography/pages/birds-warblers.html'>Warblers</a></li>
+<li><a href='/photography/pages/birds-waterfowl.html'>Waterfowl</a></li>
+<li><a href='/photography/pages/birds-woodpeckers.html'>Woodpeckers</a></li>
+<li><a href='/photography/pages/birds-wrens.html'>Wrens</a></li>
+</ul>
+    </li>
+    <li class='dropdown'><a href='#'>Mammals</a>
+<ul class='dropdown-menu'>
+<li><a href='/photography/pages/mammals-carnivores.html'>Carnivores</a></li>
+<li><a href='/photography/pages/mammals-rodents.html'>Rodents</a></li>
+<li><a href='/photography/pages/mammals-ungulates.html'>Ungulates</a></li>
+</ul>
+    </li>
+    <li class='dropdown'><a href='#'>Landscapes</a>
+<ul class='dropdown-menu'>
+<li><a href='/photography/pages/landscapes-camera-landscapes.html'>Camera landscapes</a></li>
+<li><a href='/photography/pages/landscapes-cellphone-landscapes.html'>Cellphone landscapes</a></li>
+</ul>
+    </li>
+    <li class='dropdown'><a href='#'>More</a>
+<ul class='dropdown-menu'>
+<li><a href='/photography/pages/more-insects & spiders.html'>Insects & spiders</a></li>
+<li><a href='/photography/pages/more-reptiles & amphibians.html'>Reptiles & amphibians</a></li>
+<li><a href='/photography/pages/more-wildflowers.html'>Wildflowers</a></li>
+<li><a href='/photography/pages/more-showcase.html'>Showcase</a></li>
+<li><a href='/photography/pages/more-faves.html'>Favorites</a></li>
+<li><a href='/photography/pages/more-silhouettes.html'>Silhouettes</a></li>
+<li><a href='/photography/pages/more-portraits.html'>Portraits</a></li>
+<li><a href='/photography/pages/more-birds-in-flight.html'>Birds in flight</a></li>
+<li><a href='/photography/pages/more-flickr.html'>Flickr</a></li>
+<li><a href='/photography/pages/more-journalism.html'>Journalism</a></li>
+<li><a href='/photography/pages/more-photojournalism.html'>Photojournalism</a></li>
+<li><a href='/photography/pages/more-contact.html'>Contact</a></li>
+</ul>
+    </li>
+    <li class='nav-right'><a href='/photography/pages/search.html'>Search</a></li>
+  </ul>
+</div>
+
+<div class="pjg-viewer">
+  <button class="pjg-arrow" id="pjg-prev" aria-label="Previous photo">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 4 7 12 15 20"/></svg>
+  </button>
+  <div class="pjg-stage">
+    <div class="pjg-frame" id="pjg-frame">
+      <img id="pjg-img" alt=""/>
+      <div class="pjg-caption" id="pjg-caption">
+        <div class="pjg-headline" id="pjg-headline"></div>
+        <div class="pjg-text" id="pjg-text"></div>
+      </div>
+    </div>
+  </div>
+  <button class="pjg-arrow" id="pjg-next" aria-label="Next photo">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 4 17 12 9 20"/></svg>
+  </button>
+</div>
+
+<script>
+  var photos = [{"src": "/photography/photojournalism_web/dailies/01-cover-gray-fire.jpg", "headline": "Gray Fire ravages Medical Lake", "caption": "Isaiah Tonasket looks at the burning rubble of his family's home Friday night in Medical Lake. 'I cried a little bit, not gonna lie,' he said."}, {"src": "/photography/photojournalism_web/dailies/02-gray-fire.jpg", "headline": "Gray Fire ravages Medical Lake", "caption": "Doctors Svetlana Cox, Brian Sweatt and Daniel Sim watch the Gray Fire on Friday from a hill in the middle of an alfalfa field near Eastern State Hospital. The Gray Fire destroyed over 200 homes, making it one of the most destructive fires in Washington history."}, {"src": "/photography/photojournalism_web/dailies/02a-skater.jpg", "headline": "New Year's on ice", "caption": "A skater zips by on New Year's Eve while looping the Skate Ribbon at Riverfront Park in downtown Spokane."}, {"src": "/photography/photojournalism_web/dailies/03-smoke.jpg", "headline": "Smoky Palouse", "caption": "Wildfire smoke casts a haze over the Palouse on July 22 near Wilbur."}, {"src": "/photography/photojournalism_web/dailies/03a-black-friday.jpg", "headline": "Black Friday", "caption": "Jeffery Brendmoen stocks toys Friday at The General Store in Spokane."}, {"src": "/photography/photojournalism_web/dailies/04-first-day-of-class-csi.jpg", "headline": "Back to school", "caption": "College of Southern Idaho student Madeline Wherry waits for class to begin Monday on the first day of the fall semester."}, {"src": "/photography/photojournalism_web/dailies/06-sunset.jpg", "headline": "Saltese sunset", "caption": "A young couple, who chose to remain anonymous, watch the sunset Thursday from a high point in the Saltese Uplands Conservation Area southeast of Spokane Valley."}];
+
+  var idx = 0;
+  var img = document.getElementById("pjg-img");
+  var cap = document.getElementById("pjg-caption");
+  var head = document.getElementById("pjg-headline");
+  var text = document.getElementById("pjg-text");
+  var frame = document.getElementById("pjg-frame");
+
+  img.addEventListener("load", function () { img.style.opacity = 1; });
+
+  function preload(i) {
+    var n = (i + photos.length) % photos.length;
+    var p = new Image();
+    p.src = photos[n].src;
+  }
+
+  function show(i) {
+    idx = (i + photos.length) % photos.length;
+    var p = photos[idx];
+    img.style.opacity = 0;
+    img.src = p.src;
+    img.alt = p.headline || p.caption;
+    head.textContent = p.headline;
+    text.textContent = p.caption;
+    cap.style.display = (p.headline || p.caption) ? "" : "none";
+    frame.classList.remove("show-caption");
+    preload(idx + 1);
+    preload(idx - 1);
+  }
+
+  document.getElementById("pjg-prev").addEventListener("click", function () { show(idx - 1); });
+  document.getElementById("pjg-next").addEventListener("click", function () { show(idx + 1); });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") show(idx - 1);
+    if (e.key === "ArrowRight") show(idx + 1);
+  });
+
+  var startX = null;
+  frame.addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; }, { passive: true });
+  frame.addEventListener("touchend", function (e) {
+    if (startX === null) return;
+    var dx = e.changedTouches[0].clientX - startX;
+    startX = null;
+    if (Math.abs(dx) > 50) show(dx > 0 ? idx - 1 : idx + 1);
+  });
+
+  if (window.matchMedia("(hover: none)").matches) {
+    frame.addEventListener("click", function () { frame.classList.toggle("show-caption"); });
+  }
+
+  show(0);
+</script>
+</body>
+</html>

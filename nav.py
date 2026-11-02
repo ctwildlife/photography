@@ -9,6 +9,7 @@ manual_nav = [
 manual_more_links = [
     {"title": "Flickr", "url": "/photography/pages/more-flickr.html"},
     {"title": "Journalism", "url": "/photography/pages/more-journalism.html"},
+    {"title": "Photojournalism", "url": "/photography/pages/more-photojournalism.html"},
     {"title": "Contact", "url": "/photography/pages/more-contact.html"},
 ]
 
